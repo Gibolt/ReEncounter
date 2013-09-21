@@ -1,3 +1,5 @@
+Create Database ReEncounter;
+
 CREATE TABLE Users (
 	User		VarChar(30) Primary Key,
 	Email		VarChar(50) Unique Not Null,
@@ -24,8 +26,9 @@ CREATE TABLE Timestmp (
 CREATE TABLE ProximityCount (
 	User1	VarChar(30),
 	User2	VarChar(30),
-	Count	Integer,
-	FOREIGN KEY (User1, User2) REFERENCES Users (User, User),
+	Times	Integer,
+	FOREIGN KEY (User1) REFERENCES Users (User),
+	FOREIGN KEY (User2) REFERENCES Users (User),
 	CONSTRAINT pk_ProximityCount PRIMARY KEY (User1, User2)
 );
 
@@ -33,7 +36,8 @@ CREATE TABLE Encounter (
 	User1	VarChar(30),
 	User2	VarChar(30),
 	Time	Timestamp,
-	FOREIGN KEY (User1, User2) REFERENCES Users (User, User),
+	FOREIGN KEY (User1) REFERENCES Users (User),
+	FOREIGN KEY (User2) REFERENCES Users (User),
 	FOREIGN KEY (Time) REFERENCES Timestmp (Time),
 	CONSTRAINT pk_Encounter PRIMARY KEY (User1, User2, Time)
 );
@@ -47,7 +51,8 @@ CREATE TABLE EncounterDetails (
 	Longitude1	Decimal,
 	Latitude2	Decimal,
 	Longitude2	Decimal,
-	FOREIGN KEY (User1, User2) REFERENCES Users (User, User),
+	FOREIGN KEY (User1) REFERENCES Users (User),
+	FOREIGN KEY (User2) REFERENCES Users (User),
 	FOREIGN KEY (Time) REFERENCES Timestmp (Time),
 	CONSTRAINT pk_EncounterDetails PRIMARY KEY (User1, User2, Time)
 );
