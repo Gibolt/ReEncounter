@@ -1,7 +1,7 @@
 CREATE TABLE Users (
 	User		VarChar(30) Primary Key,
 	Email		VarChar(50) Unique Not Null,
-	Password	Char(20)
+	Password	Char(20) Not Null
 );
 
 CREATE TABLE UserInfo (
@@ -44,8 +44,8 @@ CREATE TABLE EncounterDetails (
 	Time		Timestamp,
 	Distance	Decimal,
 	Latitude1	Decimal,
-	Latitude2	Decimal,
 	Longitude1	Decimal,
+	Latitude2	Decimal,
 	Longitude2	Decimal,
 	FOREIGN KEY (User1, User2) REFERENCES Users (User, User),
 	FOREIGN KEY (Time) REFERENCES Timestmp (Time),
