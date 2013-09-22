@@ -17,10 +17,11 @@ CREATE TABLE UserInfo (
 );
 
 CREATE TABLE Timestmp (
-	User		VarChar(30) Primary Key,
+	User		VarChar(30),
 	Time		DateTime,
 	Latitude	Decimal(14,8),
-	Longitude	Decimal(14,8)
+	Longitude	Decimal(14,8),
+	CONSTRAINT pk_Timestmp PRIMARY KEY (User, Time)
 );
 
 CREATE TABLE ProximityCount (
