@@ -9,7 +9,7 @@
         <item>New</item>
         <item>Freq</item>
         <item>Rare</item>
-        <item>Maps</item>
+        <!--<item>Maps</item>-->
     </string-array>
 
     <string name="title_activity_new_enc">NewEncActivity</string>

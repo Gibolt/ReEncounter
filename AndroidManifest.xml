@@ -3,12 +3,13 @@
     package="com.mhacks.reencounter"
     android:versionCode="1"
     android:versionName="1.0" >
-	<uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="9"
         android:targetSdkVersion="17" />
 
     <application
@@ -41,6 +42,10 @@
         <activity
             android:name="com.mhacks.reencounter.RareActivity"
             android:label="@string/title_activity_rare" >
+        </activity>
+        <activity
+            android:name="com.mhacks.reencounter.ShowMapActivity"
+            android:label="@string/title_activity_show_map" >
         </activity>
     </application>
 
