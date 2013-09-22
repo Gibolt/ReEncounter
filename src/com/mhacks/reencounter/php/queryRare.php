@@ -2,7 +2,7 @@
 if(isset($_GET['user'])) {
 	$user     = strtolower($_GET['user']);
 	$password = $_GET['password'];
-        $min_num  = intval($_GET['min_num']
+        $min_num  = intval($_GET['min_num']);
 	$max_num  = intval($_GET['max_num']);
 	$format   = "json";
 
@@ -28,7 +28,7 @@ if(isset($_GET['user'])) {
 	while($post = mysqli_fetch_assoc($result_for_user)) {
 		$times = intval($post['Times']);
 		if( $times > 2 && $times >= $min_num && $times <= $max_num) {
-			$posts[] = array('post'=>$post);
+			array_push($posts, $post);
 		}
 	}
 	

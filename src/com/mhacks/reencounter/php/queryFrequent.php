@@ -27,7 +27,7 @@ if(isset($_GET['user'])) {
 	while($post = mysqli_fetch_assoc($result_for_user)) {
 		$times = intval($post['Times']);
 		if( $times >= 2 && $times >= $min_num) {
-			$posts[] = array('post'=>$post);
+			array($posts,$post);
 		}
 	}
 	
