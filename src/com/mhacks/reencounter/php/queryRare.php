@@ -2,7 +2,8 @@
 if(isset($_GET['user'])) {
 	$user     = strtolower($_GET['user']);
 	$password = $_GET['password'];
-	$max_num  = intval($_GET['num']);
+        $min_num  = intval($_GET['min_num']
+	$max_num  = intval($_GET['max_num']);
 	$format   = "json";
 
 	$con = mysqli_connect('reencounter.cyzculuyt8xu.us-west-2.rds.amazonaws.com:3306','admin','encounter') or die('Cannot connect to the DB');
@@ -26,7 +27,7 @@ if(isset($_GET['user'])) {
 	$posts = array();
 	while($post = mysqli_fetch_assoc($result_for_user)) {
 		$times = intval($post['Times']);
-		if( $times >= 2 && $times <= $max_num) {
+		if( $times > 2 && $times >= $min_num && $times <= $max_num) {
 			$posts[] = array('post'=>$post);
 		}
 	}
