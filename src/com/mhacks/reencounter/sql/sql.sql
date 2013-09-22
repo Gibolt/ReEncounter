@@ -18,9 +18,9 @@ CREATE TABLE UserInfo (
 
 CREATE TABLE Timestmp (
 	User		VarChar(30) Primary Key,
-	Time		Timestamp,
-	Latitude	Decimal,
-	Longitude	Decimal
+	Time		DateTime,
+	Latitude	Decimal(14,8),
+	Longitude	Decimal(14,8)
 );
 
 CREATE TABLE ProximityCount (
@@ -35,24 +35,22 @@ CREATE TABLE ProximityCount (
 CREATE TABLE Encounter (
 	User1	VarChar(30),
 	User2	VarChar(30),
-	Time	Timestamp,
+	Time	DateTime,
 	FOREIGN KEY (User1) REFERENCES Users (User),
 	FOREIGN KEY (User2) REFERENCES Users (User),
-	FOREIGN KEY (Time) REFERENCES Timestmp (Time),
 	CONSTRAINT pk_Encounter PRIMARY KEY (User1, User2, Time)
 );
 
 CREATE TABLE EncounterDetails (
 	User1		VarChar(30),
 	User2		VarChar(30),
-	Time		Timestamp,
-	Distance	Decimal,
-	Latitude1	Decimal,
-	Longitude1	Decimal,
-	Latitude2	Decimal,
-	Longitude2	Decimal,
+	Time		DateTime,
+	Distance	Decimal(14,8),
+	Latitude1	Decimal(14,8),
+	Longitude1	Decimal(14,8),
+	Latitude2	Decimal(14,8),
+	Longitude2	Decimal(14,8),
 	FOREIGN KEY (User1) REFERENCES Users (User),
 	FOREIGN KEY (User2) REFERENCES Users (User),
-	FOREIGN KEY (Time) REFERENCES Timestmp (Time),
 	CONSTRAINT pk_EncounterDetails PRIMARY KEY (User1, User2, Time)
 );

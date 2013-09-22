@@ -1,37 +1,57 @@
 <?php
-/* require the user as the parameter */
-if(isset($_GET['user'])) {
-	/* soak in the passed variable or set our own */
-	$lat = floatval($_GET['lat']);
+if(isset($_GET['user']) && isset($_GET['timestamp']) && isset($_GET['lat']) && isset($_GET['long'])) {
+	echo "Entered main code<br>";
+	$user = strtolower($_GET['user']);
+	$password = strtolower($_GET['password']);
+	$lat  = floatval($_GET['lat']);
 	$long = floatval($_GET['long']);
-	$time = date("Y-m-d H:i:s", strtotime($_POST['timestamp']));
+	#$time = date("Y-m-d H:i:s", strtotime($_POST['timestamp']));
+	$time = $_GET['timestamp'];
 	$format = strtolower($_GET['format']) == 'json' ? 'json' : 'xml'; //xml is the default
 
-	/* connect to the db */
-	$con = mysqli_connect('localhost','admin','encounter') or die('Cannot connect to the DB');
-	mysqli_query('reencounter',$con) or die('Cannot select the DB');
-
-
+	echo "Variables loaded<br>";
+	
+	$con = mysqli_connect('reencounter.cyzculuyt8xu.us-west-2.rds.amazonaws.com:3306','admin','encounter') or die('Cannot connect to the DB');
+	mysqli_select_db($con,'ReEncounterDb') or die('Cannot select the DB');
+	echo "Database Connected<br>";
+	
+	$select_user = "Select * From User
+					Where User = '$user' And Password='$password';";
+	if (mysqli_query($con, $select_user)) {
+		echo "User Failed to Match!!!!!!!!!!<br>Exiting...";
+		return;
+	}
+	echo "User Matched<br>";
+	
 	$select_timestmp = "Select User, Latitude, Longitude From Timestmp 
 						Where Time = '$time';";
-	$result_select_timestmp = mysqli_query($select_timestmp,$con) or die('Failed submission:  '.$select_timestamp);
+	$result_select_timestmp = mysqli_query($con, $select_timestmp) or die('Failed submission:  '.$select_timestamp);
 
+	$test_query = "Select * From Timestmp;";
+	$test_query_result = mysqli_query($con, $select_timestmp) or die('Failed submission:  '.$test_query);
+	
+	$lines = mysqli_num_rows($result_select_timestmp);
+	echo "Timestamp selected, $lines matched<br>";
+	echo "Current timestamp: $time<br>";
+	
 	$insert_encounter = "";
 	if(mysqli_num_rows($result_select_timestmp)) {
 		$insert_encounter = "";
 		$insert_encounter_details = "";
+		echo "Entering While Loop<br>";
 		while($timestamp = mysqli_fetch_assoc($result_select_timestmp)) {
 			#$other_time = $timestamp["Time"];
 			$other_user = $timestamp["User"];
 			$other_lat =  $timestamp["Latitude"];
 			$other_long = $timestamp["Longitude"];
 			$proximity = distance($lat, $long, $other_lat, $other_long, "M");
+			echo "Proximity is: $proximity. Timestamp is: $time.<br>";
 			if ($proximity < 1) { # Within a 1 mile radius
 				if (strcasecmp($user, $other_user) < 0) {
 					addProximityCount($user, $other_user, $con);
 					$insert_encounter .= "Insert Into Encounter
 										Values ('$user', '$other_user', '$time');\n";	
-					$insert_encounter_details .= "Insert Into Encounter
+					$insert_encounter_details .= "Insert Into EncounterDetails
 										Values ('$user', '$other_user', '$time', $proximity, $lat, $long, $other_lat, $other_long);\n";			
 				}
 				else {
@@ -39,28 +59,27 @@ if(isset($_GET['user'])) {
 					
 					$insert_encounter .= "Insert Into Encounter
 										Values ('$other_user', '$user', '$time');\n";	
-					$insert_encounter_details .= "Insert Into Encounter
+					$insert_encounter_details .= "Insert Into EncounterDetails
 										Values ('$other_user', '$user', '$time', $proximity, $other_lat, $other_long, $lat, $long);\n";	
-				}
-				
+				}			
 			}
 		}
-		mysqli_query($insert_encounter,$con) or die('Failed encounter submission:  '.$insert_encounter);
-		mysqli_query($insert_encounter_details,$con) or die('Failed encounter submission:  '.$insert_encounter_details);
-	}
-	
-	if ($insert_encounter != "") {
-			$result = mysqli_query($insert_timestmp,$con) or die('Failed encounter submission:  '.$query);
+		echo "Exited While Loop<br>";
+		if ($insert_encounter != "") {
+			mysqli_query($con, $insert_encounter) or die('Failed encounter submission:  '.$insert_encounter);
+			mysqli_query($con, $insert_encounter_details) or die('Failed encounter submission:  '.$insert_encounter_details);
+		}
 	}
 	
 	$insert_timestmp = "Insert Into Timestmp
-		Values ('$user', '$time', $lat, $long);";
-	$result = mysqli_query($insert_timestmp,$con) or die('Failed submission:  '.$query);
+						Values ('$user', '$time', $lat, $long);";
+	$result = mysqli_query($con, $insert_timestmp) or die('Failed submission:  '.$insert_timestmp);
 
+	echo "Inserting into Timestamp<br>";
 
 
 	/* output in necessary format */
-	if($format == 'json') {
+/*	if($format == 'json') {
 		header('Content-type: application/json');
 		echo json_encode(array('posts'=>$posts));
 	}
@@ -81,11 +100,11 @@ if(isset($_GET['user'])) {
 			}
 		}
 		echo '</posts>';
-	}
+	}*/
 
 	/* disconnect from the db */
 	@mysqli_close($con);
-	
+}
 
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*::                                                                         :*/
@@ -136,11 +155,11 @@ function distance($lat1, $lon1, $lat2, $lon2, $unit) {
 
 
 function addProximityCount($user1, $user2, $con) {
-	$select_proximity = "Select * From ProximityCounter 
+	$select_proximity = "Select * From ProximityCount 
 						Where User1 = '$user1' and User2 = '$user2';";
-	$result_proximity = mysqli_query($select_proximity,$con) or die('Failed submission:  '.$select_proximity);
+	$result_proximity = mysqli_query($con, $select_proximity) or die('Failed submission:  '.$select_proximity);
 	$insert_proximity = "";
-	if (!$result_proximity) {
+	if (!mysqli_num_rows($result_proximity)) {
 		$insert_proximity = "Insert Into ProximityCount
 							Values ('$user1', '$user2', 1);";
 	} 
@@ -149,7 +168,7 @@ function addProximityCount($user1, $user2, $con) {
 							Set count=count+1
 							Where user1='$user1' and user2 = '$user2';";
 	}
-	mysqli_query($insert_proximity,$con);
+	mysqli_query($con, $insert_proximity) or die('Failed submission:  '.$insert_proximity);
 }
 
 
