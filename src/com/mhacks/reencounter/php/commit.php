@@ -46,6 +46,13 @@ if(isset($_GET['user']) && isset($_GET['timestamp']) && isset($_GET['lat']) && i
 			$proximity = distance($lat, $long, $other_lat, $other_long, "M");
 			echo "Proximity is: $proximity. Timestamp is: $time.<br>";
 			if ($proximity < 1) { # Within a 1 mile radius
+                            #Check to see if encounter between users for the day is already added into database
+                            $current_date = date('Y-m-d H:i:s');
+                            $query_for_encounter_check = "Select *
+                                    From Encounter 
+                                    Where DATE(Time) = '$current_date' AND User1 = '$other_user' AND User2 = '$user';";
+                            $encounter_query_result = mysqli_query($con, $query_for_encounter_check) or die('Failed submission:  '.$query_for_encounter_check);
+                            if(mysqli_num_rows($encounter_query_result))  {
 				if (strcasecmp($user, $other_user) < 0) {
 					addProximityCount($user, $other_user, $con);
 					
@@ -68,6 +75,7 @@ if(isset($_GET['user']) && isset($_GET['timestamp']) && isset($_GET['lat']) && i
 					mysqli_query($con, $insert_encounter) or die('Failed encounter submission:  '.$insert_encounter);
 					mysqli_query($con, $insert_encounter_details) or die('Failed encounter submission:  '.$insert_encounter_details);
 				}			
+                        }
 			}
 		}
 		echo "Exited While Loop<br>";
