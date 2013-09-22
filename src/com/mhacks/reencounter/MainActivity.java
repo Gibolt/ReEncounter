@@ -40,7 +40,7 @@ public class MainActivity extends ListActivity {
 	String pw;
 //	Toast.makeText(getApplicationContext(), user + pw, Toast.LENGTH_SHORT).show();
 	//obj.put("user", user);
-	int INTERVAL = 300000;
+	int INTERVAL = 10000;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -70,19 +70,32 @@ public class MainActivity extends ListActivity {
 				//If New Encounter is clicked
 				if(position==0){
 					Intent intent = new Intent(MainActivity.this, NewEncActivity.class);
-					intent.putExtra("id", obj.toString());
+					intent.putExtra("username", user);
+					intent.putExtra("password", pw);
+					intent.putExtra("id", String.valueOf(position));
 					startActivity(intent);
 				}
 				//If Freq is clicked
 				else if(position==1){
 					Intent intent = new Intent(MainActivity.this, FreqActivity.class);
-					intent.putExtra("id", obj.toString());
+					intent.putExtra("username", user);
+					intent.putExtra("password", pw);
+					intent.putExtra("id", String.valueOf(position));
 					startActivity(intent);
 				}
 				//If Rare is clicked
-				else{
+				else if(position==2){
 					Intent intent = new Intent(MainActivity.this, RareActivity.class);
-					intent.putExtra("id", obj.toString());
+					intent.putExtra("username", user);
+					intent.putExtra("password", pw);
+					intent.putExtra("id", String.valueOf(position));
+					startActivity(intent);
+				}
+				else{
+					Intent intent = new Intent(MainActivity.this, ShowMapActivity.class);
+					intent.putExtra("username", user);
+					intent.putExtra("password", pw);
+					intent.putExtra("id", String.valueOf(position));
 					startActivity(intent);
 				}
 			}

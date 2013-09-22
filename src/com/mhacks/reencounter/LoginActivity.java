@@ -1,16 +1,14 @@
 package com.mhacks.reencounter;
 
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicHeader;
 import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.protocol.HTTP;
-import org.json.JSONObject;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -28,7 +26,6 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
@@ -100,6 +97,14 @@ public class LoginActivity extends Activity {
 					}
 				});
 		
+		findViewById(R.id.register_button).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						attemptRegister();
+					}
+				});
+		
 	}
 
 	@Override
@@ -117,11 +122,11 @@ public class LoginActivity extends Activity {
                 HttpConnectionParams.setConnectionTimeout(client.getParams(), 10000); //Timeout Limit
                 HttpResponse response;
                 try {
-                	String usr = "?user="+mEmail.substring(0,mEmail.indexOf("@")) + "&password="+mPassword+"&email="+mEmail;
-                    HttpPost post = new HttpPost("http://web.engr.illinois.edu/~reese6/MHacks/newUser.php?");
-                    StringEntity se = new StringEntity(usr);  
-                    se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-                    post.setEntity(se);
+                	String usr = "?user="+enc(mEmail.substring(0,mEmail.indexOf("@"))) + "&password="+enc(mPassword)+"&email="+enc(mEmail);
+                    HttpGet post = new HttpGet("http://web.engr.illinois.edu/~reese6/MHacks/newUser.php"+usr);
+                    //StringEntity se = new StringEntity(usr);  
+                    //se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+                    //post.setEntity(se);
                     response = client.execute(post);
 
                     /*Checking response */
@@ -137,7 +142,15 @@ public class LoginActivity extends Activity {
         };
         t.start();      
     }
-	
+	private String enc(String str) {
+		try {
+			return URLEncoder.encode(str, "ISO-8859-1");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return str;
+	}
 	/**
 	 * Attempts to sign in or register the account specified by the login form.
 	 * If there are form errors (invalid email, missing fields, etc.), the
