@@ -1,32 +1,37 @@
 <?php
-if(isset($_POST['user']) && isset($_POST['password']) ) {
-	$user     = strtolower($_POST['user']);
-	$password = $_POST['password'];
-	$max_num  = intval($_POST['num']);
+if(isset($_GET['user'])) {
+	$user     = strtolower($_GET['user']);
+	$password = $_GET['password'];
+	$max_num  = intval($_GET['num']);
+	$format   = "json";
 
 	$con = mysqli_connect('reencounter.cyzculuyt8xu.us-west-2.rds.amazonaws.com:3306','admin','encounter') or die('Cannot connect to the DB');
 	mysqli_select_db($con,'ReEncounterDb') or die('Cannot select the DB');
 
+	$select_user = "Select * From User
+					Where User = '$user' And Password='$password';";
+	if (mysqli_query($con, $select_user)) {
+		return;
+	}
+	
 	$select_for_user = "Select User2 As Other_user, Times from ProximityCount 
 						Where User1 = '$user'
 						Union All
 						Select User1 As Other_user, Times from ProximityCount 
 						Where User2 = '$user'
-						Order By Other_user";					
+						Order By Other_user;";			
 	$result_for_user = mysqli_query($con, $select_for_user) or die('Failed submission:  '.$select_for_user);
-	
-	
-	$posts = array();
-	$result_row_count = mysqli_num_rows($result_for_user);
-	if(result_row_count >= 2 && result_row_count < $max_num) {
+		header('Content-type: application/json');
 		
-		while($post = mysql_fetch_assoc($result_for_user)) {
+	$posts = array();
+	while($post = mysqli_fetch_assoc($result_for_user)) {
+		$times = intval($post['Times']);
+		if( $times >= 2 && $times <= $max_num) {
 			$posts[] = array('post'=>$post);
 		}
 	}
 	
 	if($format == 'json') {
-		header('Content-type: application/json');
 		echo json_encode(array('posts'=>$posts));
 	}
 	else {

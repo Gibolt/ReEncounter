@@ -14,4 +14,4 @@ http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=test&password=app&la
 http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=jerry&password=tom&lat=-122.076837&long=37.423184&timestamp=2013%2D09%2D20%2009%3A45%3A00
 
 
-http://web.engr.illinois.edu/~reese6/MHacks/queryRare.php?user=fakeUser&password=easy&num=5
+http://web.engr.illinois.edu/~reese6/MHacks/queryRare.php?user=jerry&password=tom&num=5

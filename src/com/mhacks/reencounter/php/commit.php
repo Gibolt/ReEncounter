@@ -171,7 +171,7 @@ function addProximityCount($user1, $user2, $con) {
 	} 
 	else {
 		$insert_proximity = "Update ProximityCount
-							Set count=count+1
+							Set times=times+1
 							Where user1='$user1' and user2 = '$user2';";
 	}
 	mysqli_query($con, $insert_proximity) or die('Failed submission:  '.$insert_proximity);

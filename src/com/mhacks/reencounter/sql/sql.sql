@@ -1,5 +1,19 @@
 Create Database ReEncounter;
 
+Select * From UserInfo;
+Select * From Timestmp;
+Select * From ProximityCount;
+Select * From EncounterDetails;
+Select * From Encounter;
+Select * From Users;
+
+Drop Table UserInfo;
+Drop Table Timestmp;
+Drop Table ProximityCount;
+Drop Table EncounterDetails;
+Drop Table Encounter;
+Drop Table Users;
+
 CREATE TABLE Users (
 	User		VarChar(30) Primary Key,
 	Email		VarChar(50) Unique Not Null,
