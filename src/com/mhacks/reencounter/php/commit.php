@@ -34,10 +34,9 @@ if(isset($_GET['user']) && isset($_GET['timestamp']) && isset($_GET['lat']) && i
 	echo "Timestamp selected, $lines matched<br>";
 	echo "Current timestamp: $time<br>";
 	
-	$insert_encounter = "";
 	if(mysqli_num_rows($result_select_timestmp)) {
-		$insert_encounter = "";
-		$insert_encounter_details = "";
+#		$insert_encounter = "";
+#		$insert_encounter_details = "";
 		echo "Entering While Loop<br>";
 		while($timestamp = mysqli_fetch_assoc($result_select_timestmp)) {
 			#$other_time = $timestamp["Time"];
@@ -49,26 +48,33 @@ if(isset($_GET['user']) && isset($_GET['timestamp']) && isset($_GET['lat']) && i
 			if ($proximity < 1) { # Within a 1 mile radius
 				if (strcasecmp($user, $other_user) < 0) {
 					addProximityCount($user, $other_user, $con);
-					$insert_encounter .= "Insert Into Encounter
+					
+					$insert_encounter = "Insert Into Encounter
 										Values ('$user', '$other_user', '$time');\n";	
-					$insert_encounter_details .= "Insert Into EncounterDetails
-										Values ('$user', '$other_user', '$time', $proximity, $lat, $long, $other_lat, $other_long);\n";			
+					$insert_encounter_details = "Insert Into EncounterDetails
+										Values ('$user', '$other_user', '$time', $proximity, $lat, $long, $other_lat, $other_long);\n";		
+
+					mysqli_query($con, $insert_encounter) or die('Failed encounter submission:  '.$insert_encounter);
+					mysqli_query($con, $insert_encounter_details) or die('Failed encounter submission:  '.$insert_encounter_details);
 				}
 				else {
 					addProximityCount($other_user, $user, $con);
 					
-					$insert_encounter .= "Insert Into Encounter
+					$insert_encounter = "Insert Into Encounter
 										Values ('$other_user', '$user', '$time');\n";	
-					$insert_encounter_details .= "Insert Into EncounterDetails
+					$insert_encounter_details = "Insert Into EncounterDetails
 										Values ('$other_user', '$user', '$time', $proximity, $other_lat, $other_long, $lat, $long);\n";	
+										
+					mysqli_query($con, $insert_encounter) or die('Failed encounter submission:  '.$insert_encounter);
+					mysqli_query($con, $insert_encounter_details) or die('Failed encounter submission:  '.$insert_encounter_details);
 				}			
 			}
 		}
 		echo "Exited While Loop<br>";
-		if ($insert_encounter != "") {
-			mysqli_query($con, $insert_encounter) or die('Failed encounter submission:  '.$insert_encounter);
-			mysqli_query($con, $insert_encounter_details) or die('Failed encounter submission:  '.$insert_encounter_details);
-		}
+#		if ($insert_encounter != "") {
+#			mysqli_query($con, $insert_encounter) or die('Failed encounter submission:  '.$insert_encounter);
+#			mysqli_query($con, $insert_encounter_details) or die('Failed encounter submission:  '.$insert_encounter_details);
+#		}
 	}
 	
 	$insert_timestmp = "Insert Into Timestmp
