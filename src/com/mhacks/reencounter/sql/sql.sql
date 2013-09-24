@@ -22,12 +22,14 @@ CREATE TABLE Users (
 
 CREATE TABLE UserInfo (
 	User		VarChar(30) Primary Key,
-	Name		VarChar(50),
+	Email		VarChar(50),
 	Email2		VarChar(50),
-	Phone1		INTEGER,
+	Name		VarChar(50),
+	Phone		INTEGER,
 	Phone2		INTEGER,
 	Description	VarChar(255),
-	FOREIGN KEY (User) REFERENCES Users (User)
+	FOREIGN KEY (User) REFERENCES Users (User),
+	FOREIGN KEY (Email) REFERENCES Users (Email)
 );
 
 CREATE TABLE Timestmp (

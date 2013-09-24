@@ -2,7 +2,7 @@ Insert Into Users
 Values ('User', 'Email', 'Password');
 
 Insert Into UserInfo
-Values ('User', 'Name', 'Email2', 'Phone1', 'Phone2', 'Description');
+Values ('User', 'Email', 'Email2', 'Name', 'Phone', 'Phone2', 'Description');
 
 Insert Into Timestmp
 Values ('User', 'Time', Latitude, Longitude);

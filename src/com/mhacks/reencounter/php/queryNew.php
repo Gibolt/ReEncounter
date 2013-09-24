@@ -20,7 +20,7 @@ if(isset($_GET['user'])) {
 						Select User1 As Other_user, Times from ProximityCount 
 						Where User2 = '$user'
 						Order By Other_user;";			
-	$result_for_user = mysqli_query($con, $select_for_user) or die('Failed submission:  '.$select_for_user);
+	$result_for_user = mysqli_query($con, $select_for_user) or die('Failed: '.$select_for_user);
 		header('Content-type: application/json');
 		
 	$posts = array();
@@ -33,24 +33,6 @@ if(isset($_GET['user'])) {
 	
 	if($format == 'json') {
 		echo json_encode(array('posts'=>$posts));
-	}
-	else {
-		header('Content-type: text/xml');
-		echo '<posts>';
-		foreach($posts as $index => $post) {
-			if(is_array($post)) {
-				foreach($post as $key => $value) {
-					echo '<',$key,'>';
-					if(is_array($value)) {
-						foreach($value as $tag => $val) {
-							echo '<',$tag,'>',htmlentities($val),'</',$tag,'>';
-						}
-					}
-					echo '</',$key,'>';
-				}
-			}
-		}
-		echo '</posts>';
 	}
 
 	@mysqli_close($con);

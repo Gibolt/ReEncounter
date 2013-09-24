@@ -3,7 +3,7 @@ if(isset($_GET['user']) && isset($_GET['password'])) {
 	$user        = strtolower($_GET['user']);
 	$password    = $_GET['password'];
 	$email2      = strtolower($_GET['email2']);
-	$phone1      = intval($_GET['phone1']);
+	$phone       = intval($_GET['phone']);
 	$phone2      = intval($_GET['phone2']);
 	$description = $_GET['description'];
 
@@ -12,14 +12,15 @@ if(isset($_GET['user']) && isset($_GET['password'])) {
 
 	$select_user = "Select * from User 
 					Where User = '$user' And Password = '$password';";
-	if(!mysqli_query($con, $select_user)) {
+	$result_user = mysqli_query($con, $select_user) or die('Failed: '.$select_user);
+	if(!$result_user) {
 		return;
 	}
 
 	$update_user_info = "Update UserInfo
-					Set Email2='$email2', Phone1=$phone1, Phone2=$phone2, Description='$description'
+					Set Email2='$email2', Phone=$phone, Phone2=$phone2, Description='$description'
 					Where User = '$user'";
-	mysqli_query($con, $update_user_info) or die('Failed submission:  '.$update_user_info);
+	mysqli_query($con, $update_user_info) or die('Failed: '.$update_user_info);
 
 	@mysqli_close($con);
 }

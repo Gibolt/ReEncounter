@@ -39,6 +39,10 @@ http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=Jerry&password=tom&l
 
 http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=Gibolt&password=yeahRight&lat=-122.079384&long=37.422216&timestamp=2013%2D09%2D23%2009%3A45%3A00
 http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=Jerry&password=tom&lat=-122.076837&long=37.423184&timestamp=2013%2D09%2D23%2009%3A45%3A00
+http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=SmallWorld&password=app&lat=-122.077837&long=37.423284&timestamp=2013%2D09%2D23%2009%3A45%3A00
+
+http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=Gibolt&password=yeahRight&lat=-122.079384&long=37.422216&timestamp=2013%2D09%2D25%2009%3A45%3A00
+http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=Jerry&password=tom&lat=-122.076837&long=37.423184&timestamp=2013%2D09%2D25%2009%3A45%3A00
 
 
 http://web.engr.illinois.edu/~reese6/MHacks/queryNew.php?user=Jerry&password=tom&num=3
@@ -47,3 +51,6 @@ http://web.engr.illinois.edu/~reese6/MHacks/queryFrequent.php?user=Jerry&passwor
 
 
 http://web.engr.illinois.edu/~reese6/MHacks/maps.php?user1=Jerry&user2=Gibolt&password=tom
+
+http://web.engr.illinois.edu/~reese6/MHacks/queryUserInfo.php?user=Gibolt&infoUser=Jerry&password=yeahRight
+
