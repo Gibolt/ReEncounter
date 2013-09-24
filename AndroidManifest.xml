@@ -47,6 +47,10 @@
             android:name="com.mhacks.reencounter.ShowMapActivity"
             android:label="@string/title_activity_show_map" >
         </activity>
+        <activity
+            android:name="com.mhacks.reencounter.ProfileActivity"
+            android:label="@string/title_activity_profile" >
+        </activity>
     </application>
 
 </manifest>

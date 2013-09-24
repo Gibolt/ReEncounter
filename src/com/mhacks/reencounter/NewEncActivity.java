@@ -15,37 +15,49 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-//query stuff from php
+import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
+
+/**
+ * Activity which displays users you have been near a few times.
+ */
 public class NewEncActivity extends ListActivity {
-	String username;
+	String user;
 	String password;
+	
+	final String webUrl = "http://web.engr.illinois.edu/~reese6/MHacks/";
+	final String queryUrl = webUrl + "queryNew.php";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_enc);
 		if (android.os.Build.VERSION.SDK_INT > 9) {
-		      StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-		      StrictMode.setThreadPolicy(policy);
-		    }
+			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		    StrictMode.setThreadPolicy(policy);
+		}
 		Bundle b = getIntent().getExtras();
-		username = b.getString("username");
+		user = b.getString("username");
 		password = b.getString("password");
-		String id = b.getString("id");
-		 // Create a new HTTP Client
+		
 	    HttpClient defaultClient = new DefaultHttpClient();
 	    // Setup the get request
-	    String usr = "?user="+username + "&password="+password+"&num="+3;
-	    Log.w("output", "http://web.engr.illinois.edu/~reese6/MHacks/queryNew.php"+usr);
-	    HttpPost httpPostRequest = new HttpPost("http://web.engr.illinois.edu/~reese6/MHacks/queryNew.php"+usr);
+	    String usr = "?user="	  + user
+	    		   + "&password=" + password
+	    		   + "&num="      + 3;
+	    Log.w("output", queryUrl + usr);
+	    HttpPost httpPostRequest = new HttpPost(queryUrl + usr);
 		try {
 			// Execute the request in the client
 		    HttpResponse response = defaultClient.execute(httpPostRequest);
-		    // Grab the response
 		    String jsonResult = inputStreamToString(response.getEntity().getContent()).toString();
 		    JSONObject obj = new JSONObject(jsonResult);
 		    JSONArray array = obj.getJSONArray("posts");
@@ -61,10 +73,21 @@ public class NewEncActivity extends ListActivity {
 			e.printStackTrace();
 		}
 		
-		//String[] list = getResources().getStringArray(R.array.list_array);
-		//setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, list));
-		/*Toast toast=Toast.makeText(this, "Index: " + ans, Toast.LENGTH_SHORT);
-        toast.show();*/
+		ListView lv = getListView();
+		lv.setTextFilterEnabled(true);
+		lv.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				if(position==0){
+					Intent intent = new Intent(NewEncActivity.this, ProfileActivity.class);
+					intent.putExtra("username", user);
+					intent.putExtra("password", password);
+					//intent.putExtra("id", String.valueOf(position));
+					intent.putExtra("id", "Jerry");
+					startActivity(intent);
+				}
+			}
+		});
 	}
 
 	@Override
@@ -79,14 +102,13 @@ public class NewEncActivity extends ListActivity {
         BufferedReader rd = new BufferedReader(new InputStreamReader(is));
           
         try {
-         while ((rLine = rd.readLine()) != null) {
-          answer.append(rLine);
-           }
-        }
-          
+        	while ((rLine = rd.readLine()) != null) {
+        	answer.append(rLine);
+        	}
+        }      
         catch (IOException e) {
             e.printStackTrace();
-         }
+        }
         return answer;
-       }
+    }
 }
