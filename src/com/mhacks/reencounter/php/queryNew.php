@@ -2,9 +2,13 @@
 if(isset($_GET['user'])) {
 	$user     = strtolower($_GET['user']);
 	$password = $_GET['password'];
+	$min_num  = 2;
 	$max_num  = intval($_GET['num']);
-	$format   = "json";
-
+	
+	if (max_num < min_num) {
+		return;
+	}
+	
 	$con = mysqli_connect('reencounter.cyzculuyt8xu.us-west-2.rds.amazonaws.com:3306','admin','encounter') or die('Cannot connect to the DB');
 	mysqli_select_db($con,'ReEncounterDb') or die('Cannot select the DB');
 
@@ -21,19 +25,17 @@ if(isset($_GET['user'])) {
 						Where User2 = '$user'
 						Order By Other_user;";			
 	$result_for_user = mysqli_query($con, $select_for_user) or die('Failed: '.$select_for_user);
-		header('Content-type: application/json');
 		
 	$posts = array();
 	while($post = mysqli_fetch_assoc($result_for_user)) {
 		$times = intval($post['Times']);
-		if( $times >= 2 && $times <= $max_num) {
+		if( $times >= min_num && $times <= $max_num) {
 			array_push($posts,$post);
 		}
 	}
 	
-	if($format == 'json') {
-		echo json_encode(array('posts'=>$posts));
-	}
+	header('Content-type: application/json');
+	echo json_encode(array('posts'=>$posts));
 
 	@mysqli_close($con);
 }
