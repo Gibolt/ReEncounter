@@ -22,7 +22,7 @@ if(isset($_GET['user']) && isset($_GET['password']) && isset($_GET['otherUser'])
 	}
 	
 	$select_for_times = "Select Times from ProximityCount 
-						 Where User1 = '$user1' And User2 = '$user2' And Times > 1";			
+						 Where User1 = '$user1' And User2 = '$user2' And Times > 1;";			
 	$result_for_times = mysqli_query($con, $select_for_times) or die('Failed: '.$select_for_times);
 	
 	if ($mysqli_num_rows($result_for_times) > 0) {

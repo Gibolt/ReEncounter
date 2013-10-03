@@ -52,9 +52,9 @@ if(isset($_GET['user']) && isset($_GET['timestamp']) && isset($_GET['lat']) && i
 						addProximityCount($user, $other_user, $con);
 						
 						$insert_encounter = "Insert Into Encounter
-											Values ('$user', '$other_user', '$time');\n";	
+											Values ('$user', '$other_user', '$time');";	
 						$insert_encounter_details = "Insert Into EncounterDetails
-											Values ('$user', '$other_user', '$time', $proximity, $lat, $long, $other_lat, $other_long);\n";		
+											Values ('$user', '$other_user', '$time', $proximity, $lat, $long, $other_lat, $other_long);";		
 
 						mysqli_query($con, $insert_encounter) or die('Failed: '.$insert_encounter);
 						mysqli_query($con, $insert_encounter_details) or die('Failed: '.$insert_encounter_details);
@@ -63,9 +63,9 @@ if(isset($_GET['user']) && isset($_GET['timestamp']) && isset($_GET['lat']) && i
 						addProximityCount($other_user, $user, $con);
 						
 						$insert_encounter = "Insert Into Encounter
-											Values ('$other_user', '$user', '$time');\n";	
+											Values ('$other_user', '$user', '$time');";	
 						$insert_encounter_details = "Insert Into EncounterDetails
-											Values ('$other_user', '$user', '$time', $proximity, $other_lat, $other_long, $lat, $long);\n";	
+											Values ('$other_user', '$user', '$time', $proximity, $other_lat, $other_long, $lat, $long);";	
 											
 						mysqli_query($con, $insert_encounter) or die('Failed:  '.$insert_encounter);
 						mysqli_query($con, $insert_encounter_details) or die('Failed:  '.$insert_encounter_details);
