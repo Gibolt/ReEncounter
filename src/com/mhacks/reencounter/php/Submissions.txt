@@ -1,33 +1,9 @@
-http://web.engr.illinois.edu/~reese6/MHacks/newUser.php?user=fakeUser&password=easy&email=fakeUser%40gmail%2Ecom
-http://web.engr.illinois.edu/~reese6/MHacks/newUser.php?user=foo&password=bar&email=foobar%40hotmail%2Ecom
-http://web.engr.illinois.edu/~reese6/MHacks/newUser.php?user=test&password=app&email=testapp%40yahoo%2Ecom
-http://web.engr.illinois.edu/~reese6/MHacks/newUser.php?user=jerry&password=tom&email=tomjerry%40mail%2Ecom
-
-http://web.engr.illinois.edu/~reese6/MHacks/updateUser.php?user=fakeUser&password=easy&phone1=15556379294&Description=Hi%2E%20My%20name%20is%20Fake%2E
-
-http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=fakeUser&password=easy&lat=-122.084095&long=37.422006&timestamp=2013%2D09%2D21%2009%3A45%3A00
-http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=foo&password=bar&lat=-122.084095&long=37.422006&timestamp=2013%2D09%2D21%2009%3A45%3A00
-http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=test&password=app&lat=-122.079384&long=37.422216&timestamp=2013%2D09%2D21%2009%3A45%3A00
-http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=jerry&password=tom&lat=-122.076837&long=37.423184&timestamp=2013%2D09%2D21%2009%3A45%3A00
-
-http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=test&password=app&lat=-122.079384&long=37.422216&timestamp=2013%2D09%2D20%2009%3A45%3A00
-http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=jerry&password=tom&lat=-122.076837&long=37.423184&timestamp=2013%2D09%2D20%2009%3A45%3A00
-
-
-http://web.engr.illinois.edu/~reese6/MHacks/queryNew.php?user=jerry&password=tom&num=3
-http://web.engr.illinois.edu/~reese6/MHacks/queryRare.php?user=jerry&password=tom&minnum=4&maxnum=7
-http://web.engr.illinois.edu/~reese6/MHacks/queryFrequent.php?user=jerry&password=tom&num=8
-
-
-
-
-
 http://web.engr.illinois.edu/~reese6/MHacks/newUser.php?user=Gibolt&password=yeahRight&email=reese6%40gmail%2Ecom
 http://web.engr.illinois.edu/~reese6/MHacks/newUser.php?user=SnoreKing2&password=Asl33p&email=supertired87234%40hotmail%2Ecom
 http://web.engr.illinois.edu/~reese6/MHacks/newUser.php?user=SmallWorld&password=app&email=testapp%40yahoo%2Ecom
 http://web.engr.illinois.edu/~reese6/MHacks/newUser.php?user=Jerry&password=tom&email=tomjerry%40mail%2Ecom
 
-http://web.engr.illinois.edu/~reese6/MHacks/updateUser.php?user=Gibolt&password=yeahRight&phone1=15556379294&Description=Hi%2E%20My%20name%20is%20Fake%2E
+http://web.engr.illinois.edu/~reese6/MHacks/updateUser.php?user=Gibolt&password=yeahRight&phone=15556379294&Description=Hi%2E%20My%20name%20is%20Fake%2E
 
 http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=Gibolt&password=yeahRight&lat=-122.084095&long=37.422006&timestamp=2013%2D09%2D21%2009%3A45%3A00
 http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=SnoreKing2&password=Asl33p&lat=-122.084095&long=37.422006&timestamp=2013%2D09%2D21%2009%3A45%3A00
@@ -51,6 +27,14 @@ http://web.engr.illinois.edu/~reese6/MHacks/queryFrequent.php?user=Jerry&passwor
 
 
 http://web.engr.illinois.edu/~reese6/MHacks/maps.php?user1=Jerry&user2=Gibolt&password=tom
-
 http://web.engr.illinois.edu/~reese6/MHacks/queryUserInfo.php?user=Gibolt&infoUser=Jerry&password=yeahRight
+
+
+http://web.engr.illinois.edu/~reese6/MHacks/addBlock.php?user=Gibolt&otherUser=Jerry&password=yeahRight
+http://web.engr.illinois.edu/~reese6/MHacks/addBlock.php?user=Gibolt&otherUser=snoreKing2&password=yeahRight
+http://web.engr.illinois.edu/~reese6/MHacks/deleteBlock.php?user=Gibolt&otherUser=Jerry&password=yeahRight
+http://web.engr.illinois.edu/~reese6/MHacks/deleteBlock.php?user=Gibolt&otherUser=snoreKing2&password=yeahRight
+
+http://web.engr.illinois.edu/~reese6/MHacks/deleteEncounter.php?user=Gibolt&otherUser=jerry&password=yeahRight&timestamp=2013%2D09%2D21%2009%3A45%3A00
+http://web.engr.illinois.edu/~reese6/MHacks/deleteEncounterAll.php?user=Gibolt&otherUser=Jerry&password=yeahRight
 

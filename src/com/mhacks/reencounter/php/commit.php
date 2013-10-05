@@ -1,72 +1,70 @@
 <?php
 if(isset($_GET['user']) && isset($_GET['timestamp']) && isset($_GET['lat']) && isset($_GET['long'])) {
-	echo "Entered main code<br>";
-	$user = strtolower($_GET['user']);
+	include 'globalFunctions.php';
+	$user     = strtolower($_GET['user']);
 	$password = strtolower($_GET['password']);
-	$lat  = floatval($_GET['lat']);
-	$long = floatval($_GET['long']);
-	$time = $_GET['timestamp'];
+	$lat      = floatval($_GET['lat']);
+	$lon      = floatval($_GET['long']);
+	$time     = $_GET['timestamp'];
+	$defaultRadius = 1;
+	$defaultUnit   = "M";
 
-	echo "Variables loaded<br>";
-	
-	$con = mysqli_connect('reencounter.cyzculuyt8xu.us-west-2.rds.amazonaws.com:3306','admin','encounter') or die('Cannot connect to the DB');
-	mysqli_select_db($con,'ReEncounterDb') or die('Cannot select the DB');
-	echo "Database Connected<br>";
-	
-	$select_user = "Select * From User
-					Where User = '$user' And Password='$password';";
-	if (mysqli_query($con, $select_user)) {
-		echo "User Failed to Match!!!!!!!!!!<br>Exiting...";
-		return;
-	}
-	echo "User Matched<br>";
+	$con = establishConnection();
+	userAuthentication($user, $password, $con);
+	echo "User Authenticated<br>";
+	echo $time;
 	
 	$select_timestmp = "Select User, Latitude, Longitude From Timestmp 
 						Where Time = '$time';";
-	$result_select_timestmp = mysqli_query($con, $select_timestmp) or die('Failed: '.$select_timestamp);
-
-	$test_query = "Select * From Timestmp;";
-	$test_query_result = mysqli_query($con, $select_timestmp) or die('Failed: '.$test_query);
-	
-	$lines = mysqli_num_rows($result_select_timestmp);
+	$result_timestmp = mysqli_query($con, $select_timestmp) or die('Failed: '.$select_timestamp);
+	$lines = mysqli_num_rows($result_timestmp);
 	echo "Timestamp selected, $lines matched<br>";
 	echo "Current timestamp: $time<br>";
-	
-	if(mysqli_num_rows($result_select_timestmp)) {
+
+	if(mysqli_num_rows($result_timestmp)) {
 		echo "Entering While Loop<br>";
-		while($timestamp = mysqli_fetch_assoc($result_select_timestmp)) {
-			$other_user = $timestamp["User"];
-			$other_lat =  $timestamp["Latitude"];
-			$other_long = $timestamp["Longitude"];
-			$proximity = distance($lat, $long, $other_lat, $other_long, "M");
+		while($timestamp = mysqli_fetch_assoc($result_timestmp)) {
+			$otherUser = $timestamp["User"];
+			if ($user == $otherUser) {
+				continue;
+			}
+			$otherLat  = $timestamp["Latitude"];
+			$otherLon  = $timestamp["Longitude"];
+			$proximity = distance($lat, $lon, $otherLat, $otherLon, $defaultUnit);
 			echo "Proximity is: $proximity. Timestamp is: $time.<br>";
-			if ($proximity < 1) { # Within a 1 mile radius
+			if ($proximity < $defaultRadius) {  # Within a default radius
                 #Check to see if encounter between users for the day is already added into database
                 $current_date = date('Y-m-d H:i:s');
-                $query_for_encounter_check = "Select *
-                                    From Encounter 
-                                    Where DATE(Time) = '$current_date' AND User1 = '$other_user' AND User2 = '$user';";
-                $encounter_query_result = mysqli_query($con, $query_for_encounter_check) or die('Failed: '.$query_for_encounter_check);
-                if(mysqli_num_rows($encounter_query_result))  {
-					if (strcasecmp($user, $other_user) < 0) {
-						addProximityCount($user, $other_user, $con);
-						
+				if (strcasecmp($user, $otherUser) < 0) {
+					$query_for_encounter_check = "Select *
+												  From Encounter 
+												  Where DATE(Time) = '$current_date' AND User1 = '$user' AND User2 = '$otherUser';";
+                    $encounter_query_result = mysqli_query($con, $query_for_encounter_check) or die('Failed: '.$query_for_encounter_check);
+					if(mysqli_num_rows($encounter_query_result) == 0)  {
+						addProximityCount($user, $otherUser, $con);
+
 						$insert_encounter = "Insert Into Encounter
-											Values ('$user', '$other_user', '$time');";	
+											Values ('$user', '$otherUser', '$time');";	
 						$insert_encounter_details = "Insert Into EncounterDetails
-											Values ('$user', '$other_user', '$time', $proximity, $lat, $long, $other_lat, $other_long);";		
+											Values ('$user', '$otherUser', '$time', $proximity, $lat, $lon, $otherLat, $otherLon);";		
 
 						mysqli_query($con, $insert_encounter) or die('Failed: '.$insert_encounter);
 						mysqli_query($con, $insert_encounter_details) or die('Failed: '.$insert_encounter_details);
 					}
-					else {
-						addProximityCount($other_user, $user, $con);
-						
+				}
+				else {
+					$query_for_encounter_check = "Select *
+												  From Encounter 
+												  Where DATE(Time) = '$current_date' AND User1 = '$otherUser' AND User2 = '$user';";
+                    $encounter_query_result = mysqli_query($con, $query_for_encounter_check) or die('Failed: '.$query_for_encounter_check);
+					if(mysqli_num_rows($encounter_query_result) == 0)  {
+						addProximityCount($otherUser, $user, $con);
+
 						$insert_encounter = "Insert Into Encounter
-											Values ('$other_user', '$user', '$time');";	
+											Values ('$otherUser', '$user', '$time');";	
 						$insert_encounter_details = "Insert Into EncounterDetails
-											Values ('$other_user', '$user', '$time', $proximity, $other_lat, $other_long, $lat, $long);";	
-											
+											Values ('$otherUser', '$user', '$time', $proximity, $otherLat, $otherLon, $lat, $lon);";	
+
 						mysqli_query($con, $insert_encounter) or die('Failed:  '.$insert_encounter);
 						mysqli_query($con, $insert_encounter_details) or die('Failed:  '.$insert_encounter_details);
 					}			
@@ -75,9 +73,9 @@ if(isset($_GET['user']) && isset($_GET['timestamp']) && isset($_GET['lat']) && i
 		}
 		echo "Exited While Loop<br>";
 	}
-	
+
 	$insert_timestmp = "Insert Into Timestmp
-						Values ('$user', '$time', $lat, $long);";
+						Values ('$user', '$time', $lat, $lon);";
 	$result = mysqli_query($con, $insert_timestmp) or die('Failed: '.$insert_timestmp);
 
 	echo "Inserting into Timestamp<br>";
@@ -125,7 +123,7 @@ function distance($lat1, $lon1, $lat2, $lon2, $unit) {
 	} 
 	else if ($unit == "K") {
 		return ($miles * 1.609344);
-    } 
+    }
 	else {
         return $miles;
     }
@@ -139,7 +137,7 @@ function addProximityCount($user1, $user2, $con) {
 	if (!mysqli_num_rows($result_proximity)) {
 		$insert_proximity = "Insert Into ProximityCount
 							Values ('$user1', '$user2', 1);";
-	} 
+	}
 	else {
 		$insert_proximity = "Update ProximityCount
 							Set times=times+1
@@ -147,6 +145,4 @@ function addProximityCount($user1, $user2, $con) {
 	}
 	mysqli_query($con, $insert_proximity) or die('Failed: '.$insert_proximity);
 }
-
-
 ?>

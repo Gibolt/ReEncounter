@@ -10,6 +10,7 @@ Select * From Users;
 Drop Table UserInfo;
 Drop Table Timestmp;
 Drop Table ProximityCount;
+Drop Table Blocked;
 Drop Table EncounterDetails;
 Drop Table Encounter;
 Drop Table Users;
@@ -25,8 +26,8 @@ CREATE TABLE UserInfo (
 	Email		VarChar(50),
 	Email2		VarChar(50),
 	Name		VarChar(50),
-	Phone		INTEGER,
-	Phone2		INTEGER,
+	Phone		VarChar(25),
+	Phone2		VarChar(25),
 	Description	VarChar(255),
 	FOREIGN KEY (User) REFERENCES Users (User),
 	FOREIGN KEY (Email) REFERENCES Users (Email)
@@ -70,4 +71,14 @@ CREATE TABLE EncounterDetails (
 	FOREIGN KEY (User1) REFERENCES Users (User),
 	FOREIGN KEY (User2) REFERENCES Users (User),
 	CONSTRAINT pk_EncounterDetails PRIMARY KEY (User1, User2, Time)
+);
+
+CREATE TABLE Blocked (
+	User1  VarChar(30),
+	User2  VarChar(30),
+	Block1 Boolean Default 0,
+	Block2 Boolean Default 0,
+	FOREIGN KEY (User1) REFERENCES Users (User),
+	FOREIGN KEY (User2) REFERENCES Users (User),
+	CONSTRAINT pk_Blocked PRIMARY KEY (User1, User2)
 );
