@@ -23,7 +23,7 @@ if(isset($_GET['user']) && isset($_GET['password']) && isset($_GET['otherUser'])
 								Where User1='$user' And User2='$otherUser' And time='$time';";
 		$reduce_proximity_count = "Update ProximityCount
 								   Set times=times-1
-								   Where User1='$user' And User2='$otherUser';";
+								   Where User1='$user' And User2='$otherUser' Limit 1;";
 
 		mysqli_query($con, $delete_from_encounter) or die('Failed: '.$delete_from_encounter);
 		mysqli_query($con, $delete_from_details) or die('Failed: '.$delete_from_details);

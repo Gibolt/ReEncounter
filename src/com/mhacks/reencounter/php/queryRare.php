@@ -18,7 +18,7 @@ if(isset($_GET['user']) && isset($_GET['password']) && isset($_GET['min_num']) &
 						Union All
 						Select User1 As otherUser, Times from ProximityCount 
 						Where User2 = '$user'
-						Order By Other_user;";			
+						Order By otherUser;";			
 	$result_for_user = mysqli_query($con, $select_for_user) or die('Failed: '.$select_for_user);
 		
 	$posts = array();

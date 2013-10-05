@@ -38,3 +38,10 @@ http://web.engr.illinois.edu/~reese6/MHacks/deleteBlock.php?user=Gibolt&otherUse
 http://web.engr.illinois.edu/~reese6/MHacks/deleteEncounter.php?user=Gibolt&otherUser=jerry&password=yeahRight&timestamp=2013%2D09%2D21%2009%3A45%3A00
 http://web.engr.illinois.edu/~reese6/MHacks/deleteEncounterAll.php?user=Gibolt&otherUser=Jerry&password=yeahRight
 
+http://web.engr.illinois.edu/~reese6/MHacks/sendMessage.php?user=Gibolt&otherUser=Jerry&password=yeahRight&message=Hello%2C%20this%20is%20my%20first%20message%0A
+http://web.engr.illinois.edu/~reese6/MHacks/sendMessage.php?user=Jerry&otherUser=Gibolt&password=tom&message=This%20is%20my%20first%20response
+http://web.engr.illinois.edu/~reese6/MHacks/sendMessage.php?user=Gibolt&otherUser=SmallWorld&password=yeahRight&message=If%20I%20haven%27t%20encountered%20you%2C%20I%20won%27t%20send
+http://web.engr.illinois.edu/~reese6/MHacks/queryMessages.php?user=Gibolt&otherUser=Jerry&password=yeahRight
+http://web.engr.illinois.edu/~reese6/MHacks/deleteMessage.php?user=Gibolt&otherUser=Jerry&password=yeahRight&timestamp=2013-10-05%2014%3A11%3A54&who=sender
+http://web.engr.illinois.edu/~reese6/MHacks/deleteMessageAll.php?user=Gibolt&otherUser=Jerry&password=yeahRight
+

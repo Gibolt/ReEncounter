@@ -21,7 +21,7 @@ if(isset($_GET['user']) && isset($_GET['password']) && isset($_GET['otherUser'])
 		$delete_from_details = "Delete from EncounterDetails
 								Where User1='$user' And User2='$otherUser';";
 		$clear_proximity_count = "Delete from ProximityCount
-								  Where User1='$user' And User2='$otherUser';";
+								  Where User1='$user' And User2='$otherUser' Limit 1;";
 
 		mysqli_query($con, $delete_from_encounter) or die('Failed: '.$delete_from_encounter);
 		mysqli_query($con, $delete_from_details) or die('Failed: '.$delete_from_details);

@@ -15,17 +15,24 @@ if(isset($_GET['user']) && isset($_GET['timestamp']) && isset($_GET['lat']) && i
 	echo $time;
 	
 	$select_timestmp = "Select User, Latitude, Longitude From Timestmp 
-						Where Time = '$time';";
+						Where Time = '$time' Limit 1;";
 	$result_timestmp = mysqli_query($con, $select_timestmp) or die('Failed: '.$select_timestamp);
 	$lines = mysqli_num_rows($result_timestmp);
 	echo "Timestamp selected, $lines matched<br>";
 	echo "Current timestamp: $time<br>";
 
 	if(mysqli_num_rows($result_timestmp)) {
+		$select_for_block = "Select User2 As otherUser from Blocked 
+							 Where User1 = '$user'
+							 Union All
+							 Select User1 As otherUser from Blocked 
+							 Where User2 = '$user'
+							 Order By otherUser;";
+		$result_for_block = mysqli_query($con, $select_for_user) or die('Failed: '.$select_for_user);
 		echo "Entering While Loop<br>";
 		while($timestamp = mysqli_fetch_assoc($result_timestmp)) {
 			$otherUser = $timestamp["User"];
-			if ($user == $otherUser) {
+			if ($user == $otherUser || containsUser($otherUser, $result_for_block)) {
 				continue;
 			}
 			$otherLat  = $timestamp["Latitude"];
@@ -44,9 +51,9 @@ if(isset($_GET['user']) && isset($_GET['timestamp']) && isset($_GET['lat']) && i
 						addProximityCount($user, $otherUser, $con);
 
 						$insert_encounter = "Insert Into Encounter
-											Values ('$user', '$otherUser', '$time');";	
+											 Values ('$user', '$otherUser', '$time');";	
 						$insert_encounter_details = "Insert Into EncounterDetails
-											Values ('$user', '$otherUser', '$time', $proximity, $lat, $lon, $otherLat, $otherLon);";		
+											         Values ('$user', '$otherUser', '$time', $proximity, $lat, $lon, $otherLat, $otherLon);";		
 
 						mysqli_query($con, $insert_encounter) or die('Failed: '.$insert_encounter);
 						mysqli_query($con, $insert_encounter_details) or die('Failed: '.$insert_encounter_details);
@@ -61,9 +68,9 @@ if(isset($_GET['user']) && isset($_GET['timestamp']) && isset($_GET['lat']) && i
 						addProximityCount($otherUser, $user, $con);
 
 						$insert_encounter = "Insert Into Encounter
-											Values ('$otherUser', '$user', '$time');";	
+											 Values ('$otherUser', '$user', '$time');";	
 						$insert_encounter_details = "Insert Into EncounterDetails
-											Values ('$otherUser', '$user', '$time', $proximity, $otherLat, $otherLon, $lat, $lon);";	
+											         Values ('$otherUser', '$user', '$time', $proximity, $otherLat, $otherLon, $lat, $lon);";	
 
 						mysqli_query($con, $insert_encounter) or die('Failed:  '.$insert_encounter);
 						mysqli_query($con, $insert_encounter_details) or die('Failed:  '.$insert_encounter_details);
@@ -131,7 +138,7 @@ function distance($lat1, $lon1, $lat2, $lon2, $unit) {
 
 function addProximityCount($user1, $user2, $con) {
 	$select_proximity = "Select * From ProximityCount 
-						Where User1 = '$user1' and User2 = '$user2';";
+						Where User1 = '$user1' and User2 = '$user2' Limit 1;";
 	$result_proximity = mysqli_query($con, $select_proximity) or die('Failed: '.$select_proximity);
 	$insert_proximity = "";
 	if (!mysqli_num_rows($result_proximity)) {
@@ -141,8 +148,17 @@ function addProximityCount($user1, $user2, $con) {
 	else {
 		$insert_proximity = "Update ProximityCount
 							Set times=times+1
-							Where user1='$user1' and user2 = '$user2';";
+							Where user1='$user1' and user2 = '$user2' Limit 1;";
 	}
 	mysqli_query($con, $insert_proximity) or die('Failed: '.$insert_proximity);
+}
+
+function containsUser($user, $result) {
+	while($post = mysqli_fetch_assoc($result)) {
+		if($user == $post['otherUser']) {
+			return 1;
+		}
+	}
+	return 0;
 }
 ?>

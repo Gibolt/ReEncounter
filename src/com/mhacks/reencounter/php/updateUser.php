@@ -13,7 +13,7 @@ if(isset($_GET['user']) && isset($_GET['password'])) {
 
 	$update_user_info = "Update UserInfo
 						 Set Email2='$email2', Phone='$phone', Phone2='$phone2', Description='$description'
-						 Where User = '$user';";
+						 Where User = '$user' Limit 1;";
 	mysqli_query($con, $update_user_info) or die('Failed: '.$update_user_info);
 
 	@mysqli_close($con);

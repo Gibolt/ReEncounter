@@ -12,7 +12,7 @@ if(isset($_GET['user']) && isset($_GET['password']) && isset($_GET['email'])) {
 	mysqli_query($con, $insert_user) or die('Failed submission:  '.$insert_user);
 
 	$insert_user_info = "Insert Into UserInfo
-					Values ('$user', '$email', '', '', '', '', '');";
+					     Values ('$user', '$email', '', '', '', '', '');";
 	mysqli_query($con, $insert_user_info) or die('Failed submission:  '.$insert_user_info);
 
 	@mysqli_close($con);

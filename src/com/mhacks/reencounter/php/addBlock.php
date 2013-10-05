@@ -4,7 +4,7 @@ if(isset($_GET['user']) && isset($_GET['password']) && isset($_GET['otherUser'])
 	$user      = strtolower($_GET['user']);
 	$password  = $_GET['password'];
 	$otherUser = strtolower($_GET['otherUser']);
-	
+
 	sameUser($user, $otherUser);
 	$con = establishConnection();
 	userAuthentication($user, $password, $con);
@@ -21,7 +21,7 @@ if(isset($_GET['user']) && isset($_GET['password']) && isset($_GET['otherUser'])
 			mysqli_query($con, $add_block) or die('Failed: '.$add_block);	
 		}
 	}
-	
+
 	@mysqli_close($con);
 }
 ?>
