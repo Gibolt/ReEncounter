@@ -32,18 +32,17 @@ public class RareActivity extends ListActivity {
 		      StrictMode.setThreadPolicy(policy);
 		    }
 		Bundle b = getIntent().getExtras();
-		String username = b.getString("username");
+		String user = b.getString("username");
 		String password = b.getString("password");
-		String id = b.getString("id");
-		 // Create a new HTTP Client
-	    HttpClient defaultClient = new DefaultHttpClient();
-	    // Setup the get request
-	    String usr = "?user="+username + "&password="+password+"&min_num="+4+"&max_num="+7;
+
+		HttpClient defaultClient = new DefaultHttpClient();
+	    String usr = "?user="     + user
+	    		   + "&password=" + password
+	    		   + "&min_num="  + 4
+	    		   + "&max_num="  + 7;
 	    HttpPost httpPostRequest = new HttpPost("http://web.engr.illinois.edu/~reese6/MHacks/queryRare.php"+usr);
 		try {
-			// Execute the request in the client
 		    HttpResponse response = defaultClient.execute(httpPostRequest);
-		    // Grab the response
 		    String jsonResult = inputStreamToString(response.getEntity().getContent()).toString();
 		    JSONObject obj = new JSONObject(jsonResult);
 		    JSONArray array = obj.getJSONArray("posts");
@@ -55,11 +54,8 @@ public class RareActivity extends ListActivity {
 			
 			setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, list));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//Toast toast=Toast.makeText(this, "Index: " + ans, Toast.LENGTH_SHORT);
-        //toast.show();
 	}
 
 	@Override

@@ -23,65 +23,67 @@ import android.widget.ArrayAdapter;
 
 public class FreqActivity extends ListActivity {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_freq);
-		if (android.os.Build.VERSION.SDK_INT > 9) {
-		      StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-		      StrictMode.setThreadPolicy(policy);
-		    }
-		Bundle b = getIntent().getExtras();
-		String username = b.getString("username");
-		String password = b.getString("password");
-		String id = b.getString("id");
-		 // Create a new HTTP Client
-	    HttpClient defaultClient = new DefaultHttpClient();
-	    // Setup the get request
-	    String usr = "?user="+username + "&password="+password+"&num="+8;
-	    HttpPost httpPostRequest = new HttpPost("http://web.engr.illinois.edu/~reese6/MHacks/queryFrequent.php"+usr);
-		try {
-			// Execute the request in the client
-		    HttpResponse response = defaultClient.execute(httpPostRequest);
-		    // Grab the response
-		    String jsonResult = inputStreamToString(response.getEntity().getContent()).toString();
-		    JSONObject obj = new JSONObject(jsonResult);
-		    JSONArray array = obj.getJSONArray("posts");
-			String[] list = new String[array.length()];
-			for(int i = 0; i < array.length();i++){
-				list[i] = array.getJSONObject(i).getString("Other_user") + " " + array.getJSONObject(i).getString("Times");
-				Log.w("output",list[i]);
-			}
-			
-			setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, list));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//Toast toast=Toast.makeText(this, "Index: " + ans, Toast.LENGTH_SHORT);
-        //toast.show();
-	}
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_freq);
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+        Bundle b = getIntent().getExtras();
+        String username = b.getString("username");
+        String password = b.getString("password");
+        String id = b.getString("id");
+        // Create a new HTTP Client
+        HttpClient defaultClient = new DefaultHttpClient();
+        // Setup the get request
+        String usr = "?user=" + username
+                + "&password=" + password
+                + "&num="      + 8;
+        HttpPost httpPostRequest = new HttpPost("http://web.engr.illinois.edu/~reese6/MHacks/queryFrequent.php"+usr);
+        try {
+            // Execute the request in the client
+            HttpResponse response = defaultClient.execute(httpPostRequest);
+            // Grab the response
+            String jsonResult = inputStreamToString(response.getEntity().getContent()).toString();
+            JSONObject obj = new JSONObject(jsonResult);
+            JSONArray array = obj.getJSONArray("posts");
+            String[] list = new String[array.length()];
+            for(int i = 0; i < array.length();i++){
+                list[i] = array.getJSONObject(i).getString("Other_user") + " " + array.getJSONObject(i).getString("Times");
+                Log.w("output",list[i]);
+            }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.freq, menu);
-		return true;
-	}
-	private StringBuilder inputStreamToString(InputStream is) {
+            setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, list));
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        //Toast toast=Toast.makeText(this, "Index: " + ans, Toast.LENGTH_SHORT);
+        //toast.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.freq, menu);
+        return true;
+    }
+    private StringBuilder inputStreamToString(InputStream is) {
         String rLine = "";
         StringBuilder answer = new StringBuilder();
         BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-          
+
         try {
-         while ((rLine = rd.readLine()) != null) {
-          answer.append(rLine);
-           }
+            while ((rLine = rd.readLine()) != null) {
+                answer.append(rLine);
+            }
         }
-          
+
         catch (IOException e) {
             e.printStackTrace();
-         }
+        }
         return answer;
-       }
+    }
 }

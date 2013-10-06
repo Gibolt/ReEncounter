@@ -40,7 +40,7 @@ public class MainActivity extends ListActivity {
 	String pw;
 //	Toast.makeText(getApplicationContext(), user + pw, Toast.LENGTH_SHORT).show();
 	//obj.put("user", user);
-	int INTERVAL = 10000;
+	final int INTERVAL = 1000*60*5; // 5 Minutes
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,12 +52,7 @@ public class MainActivity extends ListActivity {
 		LocationManager mlocManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 		LocationListener mlocListener = new MyLocationListener();
 		mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, INTERVAL, 0, mlocListener);
-		
-		/**
-		 * Supposed to update the database with the most current GPS position every 5 minutes.
-		 */
-		
-		
+				
 		//Sets the different categories in the list
 		String[] list = getResources().getStringArray(R.array.list_array);
 		setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, list));
@@ -91,6 +86,14 @@ public class MainActivity extends ListActivity {
 					intent.putExtra("id", String.valueOf(position));
 					startActivity(intent);
 				}
+				//If Messaging is clicked
+				else if(position==3){
+					Intent intent = new Intent(MainActivity.this, MessagingActivity.class);
+					intent.putExtra("username", user);
+					intent.putExtra("password", pw);
+					intent.putExtra("id", String.valueOf(position));
+					startActivity(intent);
+				}
 				else{
 					Intent intent = new Intent(MainActivity.this, ShowMapActivity.class);
 					intent.putExtra("username", user);
@@ -113,7 +116,7 @@ public class MainActivity extends ListActivity {
                 JSONObject json = param;
                
                 try {
-                	String usr = "?user="+enc(json.getString("user")) + "&password="+enc(json.getString("password"))+"&timestamp="+enc(json.getString("time"))+"&lat="+enc(json.getString("lat"))+"&long="+enc(json.getString("lon"));
+                	String usr = "?user="+enc(json.getString("user")) + "&password="+enc(json.getString("password"))+"&timestamp="+enc(json.getString("time"))+"&lat="+enc(json.getString("lat"))+"&lon="+enc(json.getString("lon"));
                     //usr = URLEncoder.encode(usr, "ISO-8859-1");
                 	Log.i("output", usr);
                 	HttpGet post = new HttpGet("http://web.engr.illinois.edu/~reese6/MHacks/commit.php"+usr);
@@ -129,7 +132,7 @@ public class MainActivity extends ListActivity {
 
                 } catch(Exception e) {
                     e.printStackTrace();
-                    //createDialog("Error", "Cannot Estabilish Connection");
+                    //createDialog("Error", "Cannot Establish Connection");
                 }
 
                 Looper.loop(); //Loop in the message queue

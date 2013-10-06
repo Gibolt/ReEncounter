@@ -17,36 +17,19 @@
         android:layout_alignParentTop="true"
         android:orientation="vertical" >
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/profileName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:text="@string/profile_name"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-            <QuickContactBadge
-                android:id="@+id/quickContactBadge1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1.19"
-                android:orientation="vertical" >
-
-                <TextView
-                    android:id="@+id/profileName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/profile_name"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                <TextView
-                    android:id="@+id/profileUser"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/profile_user"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-            </LinearLayout>
-        </LinearLayout>
+        <TextView
+            android:id="@+id/profileUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/profile_user"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <ListView
             android:id="@+id/profilePhoneList"
@@ -64,8 +47,7 @@
             android:id="@+id/profileDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.31"
-            android:text="Description"
+            android:text="@string/profile_description"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
     </LinearLayout>
@@ -77,6 +59,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:text="View Encounters" />
+        android:text="@string/profile_view_encounters" />
 
 </RelativeLayout>

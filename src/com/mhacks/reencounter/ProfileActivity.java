@@ -51,6 +51,10 @@ public class ProfileActivity extends Activity {
 	String user;
 	String infoUser;
 	String password;
+	String otherUser;
+	String name;
+	String description;
+	long   id;
 	
 	final String webUrl = "http://web.engr.illinois.edu/~reese6/MHacks/";
 	final String queryUrl = webUrl + "queryUserInfo.php";
@@ -64,12 +68,13 @@ public class ProfileActivity extends Activity {
 		    StrictMode.setThreadPolicy(policy);
 		}
 		Bundle b = getIntent().getExtras();
-		user = b.getString("username");
+		user     = b.getString("username");
 		password = b.getString("password");
-		infoUser = b.getString("id");
+		infoUser = b.getString("infoUser");
+		id       = b.getLong("id");
 		
 		mProfileName        = (TextView) findViewById(R.id.profileName);
-		mProfileName        = (TextView) findViewById(R.id.profileUser);
+		mProfileUser        = (TextView) findViewById(R.id.profileUser);
 		mProfileDescription = (TextView) findViewById(R.id.profileDescription);
 		mProfilePhoneList   = (ListView) findViewById(R.id.profilePhoneList);
 		mProfileEmailList   = (ListView) findViewById(R.id.profileEmailList);
@@ -101,16 +106,21 @@ public class ProfileActivity extends Activity {
         		    JSONObject obj = new JSONObject(jsonResult);
         		    JSONArray array = obj.getJSONArray("posts");
         			String[] list = new String[array.length()];
-        			for(int i = 0; i < array.length();i++){
-        				JSONObject responseJson = array.getJSONObject(i);
-        				mProfileName.setText(responseJson.getString("Name"));
-        				mProfileUser.setText(responseJson.getString("User"));
-        				mProfileDescription.setText(responseJson.getString("Description"));
-        				//mProfilePhoneList.
-        				list[i] = responseJson.getString("Phone1");
-        				Log.w("output",list[i]);
-        			}
-        			
+        			JSONObject responseJson = array.getJSONObject(0);
+        			otherUser = responseJson.getString("User");
+        			name = responseJson.getString("Name");
+        			description = responseJson.getString("Description");
+    				runOnUiThread(new Runnable() {
+    				    public void run() {
+    	    				mProfileUser.setText(otherUser);
+    	    				mProfileName.setText(name);
+    	    				mProfileDescription.setText(description);
+    				    }
+    				});
+//    				mProfileUser.setText("Both work");
+    				//mProfilePhoneList.
+    				list[0] = responseJson.getString("Phone");
+    				Log.w("output",list[0]);
         			//setListAdapter(new ArrayAdapter<String>(this, R.id.profilePhoneList, list));
                 } catch(Exception e) {
                     e.printStackTrace();
@@ -124,12 +134,11 @@ public class ProfileActivity extends Activity {
         String rLine = "";
         StringBuilder answer = new StringBuilder();
         BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-          
         try {
         	while ((rLine = rd.readLine()) != null) {
-        	answer.append(rLine);
+        		answer.append(rLine);
         	}
-        }      
+        }
         catch (IOException e) {
             e.printStackTrace();
         }

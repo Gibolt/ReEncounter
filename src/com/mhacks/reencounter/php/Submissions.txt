@@ -4,6 +4,8 @@ http://web.engr.illinois.edu/~reese6/MHacks/newUser.php?user=SmallWorld&password
 http://web.engr.illinois.edu/~reese6/MHacks/newUser.php?user=Jerry&password=tom&email=tomjerry%40mail%2Ecom
 
 http://web.engr.illinois.edu/~reese6/MHacks/updateUser.php?user=Gibolt&password=yeahRight&phone=15556379294&Description=Hi%2E%20My%20name%20is%20Fake%2E
+http://web.engr.illinois.edu/~reese6/MHacks/updateUser.php?user=Gibolt&password=yeahRight&phone=15556379294&description=Hi%2E%20My%20name%20is%20Fake%2E&phone2=8647699877&email2=fakeEmail%40fake.com&name=Thomas
+http://web.engr.illinois.edu/~reese6/MHacks/updateUser.php?user=Jerry&password=tom&phone=18792840274&description=This%20is%20a%20bad%20description&phone2=8692748372&email2=Jerrys%40gov.de&name=Jerry%20Man
 
 http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=Gibolt&password=yeahRight&lat=-122.084095&long=37.422006&timestamp=2013%2D09%2D21%2009%3A45%3A00
 http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=SnoreKing2&password=Asl33p&lat=-122.084095&long=37.422006&timestamp=2013%2D09%2D21%2009%3A45%3A00
@@ -28,6 +30,7 @@ http://web.engr.illinois.edu/~reese6/MHacks/queryFrequent.php?user=Jerry&passwor
 
 http://web.engr.illinois.edu/~reese6/MHacks/maps.php?user1=Jerry&user2=Gibolt&password=tom
 http://web.engr.illinois.edu/~reese6/MHacks/queryUserInfo.php?user=Gibolt&infoUser=Jerry&password=yeahRight
+http://web.engr.illinois.edu/~reese6/MHacks/queryUserInfo.php?user=Gibolt&infoUser=Gibolt&password=yeahRight
 
 
 http://web.engr.illinois.edu/~reese6/MHacks/addBlock.php?user=Gibolt&otherUser=Jerry&password=yeahRight

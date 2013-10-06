@@ -16,11 +16,10 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:debuggable="true" >
+        android:theme="@style/AppTheme">
         <activity
             android:name="com.mhacks.reencounter.LoginActivity"
-            android:label="@string/title_activity_login" >
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,6 +50,10 @@
         <activity
             android:name="com.mhacks.reencounter.ProfileActivity"
             android:label="@string/title_activity_profile" >
+        </activity>
+        <activity
+            android:name="com.mhacks.reencounter.MessagingActivity"
+            android:label="@string/title_activity_messaging" >
         </activity>
     </application>
 
