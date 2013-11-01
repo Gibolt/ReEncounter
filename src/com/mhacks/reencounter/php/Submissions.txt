@@ -1,3 +1,5 @@
+http://web.engr.illinois.edu/~reese6/MHacks/validateUser.php?user=Gibolt&password=yeahRight
+
 http://web.engr.illinois.edu/~reese6/MHacks/newUser.php?user=Gibolt&password=yeahRight&email=reese6%40gmail%2Ecom
 http://web.engr.illinois.edu/~reese6/MHacks/newUser.php?user=SnoreKing2&password=Asl33p&email=supertired87234%40hotmail%2Ecom
 http://web.engr.illinois.edu/~reese6/MHacks/newUser.php?user=SmallWorld&password=app&email=testapp%40yahoo%2Ecom
@@ -48,3 +50,7 @@ http://web.engr.illinois.edu/~reese6/MHacks/queryMessages.php?user=Gibolt&otherU
 http://web.engr.illinois.edu/~reese6/MHacks/deleteMessage.php?user=Gibolt&otherUser=Jerry&password=yeahRight&timestamp=2013-10-05%2014%3A11%3A54&who=sender
 http://web.engr.illinois.edu/~reese6/MHacks/deleteMessageAll.php?user=Gibolt&otherUser=Jerry&password=yeahRight
 
+
+http://web.engr.illinois.edu/~reese6/MHacks/addContact.php?user=Gibolt&otherUser=Jerry&password=yeahRight
+http://web.engr.illinois.edu/~reese6/MHacks/deleteContact.php?user=Gibolt&otherUser=Jerry&password=yeahRight
+http://web.engr.illinois.edu/~reese6/MHacks/queryContacts.php?user=Gibolt&password=yeahRight
