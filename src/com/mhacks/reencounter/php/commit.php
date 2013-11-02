@@ -1,21 +1,25 @@
 <?php
-if(isset($_GET['user']) && isset($_GET['timestamp']) && isset($_GET['lat']) && isset($_GET['long'])) {
+if(isset($_GET['user']) && isset($_GET['password']) && isset($_GET['timestamp']) && isset($_GET['lat']) && isset($_GET['long'])) {
 	include 'globalFunctions.php';
 	$user     = strtolower($_GET['user']);
 	$password = strtolower($_GET['password']);
 	$lat      = floatval($_GET['lat']);
 	$lon      = floatval($_GET['long']);
 	$time     = $_GET['timestamp'];
-	$defaultRadius = 1;
-	$defaultUnit   = "M";
+
+	$defaultDegree = 1/69;
+	$defaultDegreeLon = $defaultDegree/cos(deg2rad($lat));  # Converts optimization based on latitude
+	$minLat = $lat-$defaultDegree;
+	$maxLat = $lat+$defaultDegree;
+	$minLon = $lon+$defaultDegreeLon;
+	$maxLon = $lon-$defaultDegreeLon;
 
 	$con = establishConnection();
 	userAuthentication($user, $password, $con);
 	echo "User Authenticated<br>";
-	echo $time;
-	
+
 	$select_timestmp = "Select User, Latitude, Longitude From Timestmp 
-						Where Time = '$time' Limit 1;";
+						Where Time = '$time' And Latitude > $minLat And Latitude < $maxLat And Longitude > $minLon And Longitude < $maxLon;";
 	$result_timestmp = mysqli_query($con, $select_timestmp) or die('Failed: '.$select_timestamp);
 	$lines = mysqli_num_rows($result_timestmp);
 	echo "Timestamp selected, $lines matched<br>";
@@ -28,11 +32,15 @@ if(isset($_GET['user']) && isset($_GET['timestamp']) && isset($_GET['lat']) && i
 							 Select User1 As otherUser from Blocked 
 							 Where User2 = '$user'
 							 Order By otherUser;";
-		$result_for_block = mysqli_query($con, $select_for_user) or die('Failed: '.$select_for_user);
+		$result_for_block = mysqli_query($con, $select_for_block) or die('Failed: '.$select_for_block);
 		echo "Entering While Loop<br>";
 		while($timestamp = mysqli_fetch_assoc($result_timestmp)) {
 			$otherUser = $timestamp["User"];
-			if ($user == $otherUser || containsUser($otherUser, $result_for_block)) {
+			if ($user == $otherUser) {  # User already has submitted for this timestamp. Prevents failed submission
+				echo "Timestamp already exists<br>";
+				return;
+			}
+			if (containsUser($otherUser, $result_for_block)) {  # Block between users
 				continue;
 			}
 			$otherLat  = $timestamp["Latitude"];
@@ -84,7 +92,6 @@ if(isset($_GET['user']) && isset($_GET['timestamp']) && isset($_GET['lat']) && i
 	$insert_timestmp = "Insert Into Timestmp
 						Values ('$user', '$time', $lat, $lon);";
 	$result = mysqli_query($con, $insert_timestmp) or die('Failed: '.$insert_timestmp);
-
 	echo "Inserting into Timestamp<br>";
 
 	@mysqli_close($con);
