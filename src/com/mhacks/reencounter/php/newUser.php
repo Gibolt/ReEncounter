@@ -15,6 +15,10 @@ if(isset($_GET['user']) && isset($_GET['password']) && isset($_GET['email'])) {
 					     Values ('$user', '$email', '', '', '', '', 0, '');";
 	mysqli_query($con, $insert_user_info) or die('Failed submission:  '.$insert_user_info);
 
+	$insert_message_update = "Insert Into MessageUpdate
+					          Values ('$user', Now());";
+	mysqli_query($con, $insert_message_update) or die('Failed submission:  '.$insert_message_update);
+
 	header('Content-type: application/json');		
 	$posts = array();
 	array_push($posts, $user);

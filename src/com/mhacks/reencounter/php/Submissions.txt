@@ -49,6 +49,7 @@ http://web.engr.illinois.edu/~reese6/MHacks/sendMessage.php?user=Gibolt&otherUse
 http://web.engr.illinois.edu/~reese6/MHacks/queryMessages.php?user=Gibolt&otherUser=Jerry&password=yeahRight
 http://web.engr.illinois.edu/~reese6/MHacks/deleteMessage.php?user=Gibolt&otherUser=Jerry&password=yeahRight&timestamp=2013-10-05%2014%3A11%3A54&who=sender
 http://web.engr.illinois.edu/~reese6/MHacks/deleteMessageAll.php?user=Gibolt&otherUser=Jerry&password=yeahRight
+http://web.engr.illinois.edu/~reese6/MHacks/queryMessageUpdates.php?user=Gibolt&password=yeahRight
 
 
 http://web.engr.illinois.edu/~reese6/MHacks/addContact.php?user=Gibolt&otherUser=Jerry&password=yeahRight

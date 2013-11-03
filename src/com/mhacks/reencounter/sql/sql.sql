@@ -8,7 +8,7 @@ Select * From EncounterDetails;
 Select * From Encounter;
 Select * From Contacts;
 Select * From Message;
-Select * From MessageCheck;
+Select * From MessageUpdate;
 Select * From Users;
 
 Drop Table UserInfo;
@@ -19,7 +19,7 @@ Drop Table EncounterDetails;
 Drop Table Encounter;
 Drop Table Contacts;
 Drop Table Message;
-Drop Table MessageCheck;
+Drop Table MessageUpdate;
 Drop Table Users;
 
 CREATE TABLE Users (
@@ -109,14 +109,8 @@ CREATE TABLE Message (
     CONSTRAINT pk_Message PRIMARY KEY (Sender, Recipient, Time)
 );
 
-CREATE TABLE MessageCheck (
-    User1      VarChar(30)  Not Null,
-    User2      VarChar(30)  Not Null,
-    LastCheck1 DateTime     Not Null,
-    LastCheck2 DateTime     Not Null,
-    LastNew1   DateTime     Not Null,
-    LastNew2   DateTime     Not Null,
-    FOREIGN KEY (User1) REFERENCES Users (User),
-    FOREIGN KEY (User2) REFERENCES Users (User),
-    CONSTRAINT pk_MessageCheck PRIMARY KEY (User1, User2)
+CREATE TABLE MessageUpdate (
+    User       VarChar(30) Not Null Primary Key,
+    LastCheck  DateTime    Not Null,
+    FOREIGN KEY (User) REFERENCES Users (User)
 );
