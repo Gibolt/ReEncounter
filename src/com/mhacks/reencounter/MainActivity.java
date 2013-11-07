@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.Timer;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -32,7 +33,7 @@ import android.widget.Toast;
 
 //gets gps position every 5min and updates it to the database
 public class MainActivity extends ListActivity {
-
+	Timer timer1;
 	JSONObject obj = new JSONObject();
 	String user;
 	String pw;
@@ -87,11 +88,11 @@ public class MainActivity extends ListActivity {
 					intent.putExtra("otherUser", "Jerry");
 					startActivity(intent);
 				}
-				else {
-					Intent intent = new Intent(MainActivity.this, ShowMapActivity.class);
+				//If Contacts is clicked
+				else if (position==4){
+					Intent intent = new Intent(MainActivity.this, ContactsActivity.class);
 					intent.putExtra("username", user);
 					intent.putExtra("password", pw);
-					intent.putExtra("otherUser", "Jerry");
 					startActivity(intent);
 				}
 			}
@@ -130,6 +131,8 @@ public class MainActivity extends ListActivity {
 	/* Class My Location Listener */
 	public class MyLocationListener implements LocationListener
 	{
+		boolean gpsEnabled=false;
+	    boolean networkEnabled=false;
 		@SuppressWarnings("deprecation")
 		@Override
 		public void onLocationChanged(Location loc)
@@ -163,20 +166,17 @@ public class MainActivity extends ListActivity {
 		}
 
 		@Override
-		public void onProviderDisabled(String provider)
-		{
+		public void onProviderDisabled(String provider) {
 			Toast.makeText( getApplicationContext(),"Gps Disabled",Toast.LENGTH_SHORT ).show();
 		}
 
 		@Override
-		public void onProviderEnabled(String provider)
-		{
+		public void onProviderEnabled(String provider) {
 			Toast.makeText( getApplicationContext(),"Gps Enabled",Toast.LENGTH_SHORT).show();
 		}
 
 		@Override
-		public void onStatusChanged(String provider, int status, Bundle extras)
-		{
+		public void onStatusChanged(String provider, int status, Bundle extras) {
 		}
 	}/* End of Class MyLocationListener */
 }/* End of MainActivity */

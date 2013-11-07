@@ -3,7 +3,6 @@ package com.mhacks.reencounter;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import com.mhacks.reencounter.R;
 
@@ -51,8 +50,7 @@ public class NewEncActivity extends ListActivity {
 	    String query = queryUrl + usr;
 	    Log.w("output", query);
 		try {
-		    JSONObject obj = HtmlUtilities.run(query);
-		    JSONArray array = obj.getJSONArray("posts");
+			JSONArray array = HtmlUtilities.run(query).getJSONArray("posts");
 			String[] list = new String[array.length()];
 			for(int i = 0; i < array.length();i++){
 				otherUsers.add(array.getJSONObject(i).getString("Other_user"));

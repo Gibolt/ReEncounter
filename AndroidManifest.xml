@@ -55,6 +55,10 @@
             android:name="com.mhacks.reencounter.EncounterActivity"
             android:label="@string/title_activity_encounter" >
         </activity>
+        <activity
+            android:name="com.mhacks.reencounter.ContactsActivity"
+            android:label="@string/title_activity_contacts" >
+        </activity>
     </application>
 
 </manifest>

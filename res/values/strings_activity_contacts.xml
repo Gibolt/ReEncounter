@@ -1,0 +1,8 @@
+<resources>
+
+    <string name="title_activity_contacts">Contacts</string>
+
+    <!-- Strings related to profile -->
+    <string name="contacts_view_encounters">View Encounters</string>
+
+</resources>

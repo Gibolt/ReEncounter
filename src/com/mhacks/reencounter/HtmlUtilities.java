@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 public class HtmlUtilities {
     public static HttpClient defaultClient = new DefaultHttpClient();
+//    public static String endpoint = Resources.getSystem().getString(R.string.endpoint);
     static {
         HttpConnectionParams.setConnectionTimeout(defaultClient.getParams(), 10000);
     }

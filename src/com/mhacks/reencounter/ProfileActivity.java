@@ -132,7 +132,7 @@ public class ProfileActivity extends Activity {
 	    public void onClick(View v) {
 			Intent intent = new Intent(Intent.ACTION_SEND);
 			intent.setType("text/plain");
-			intent.putExtra(Intent.EXTRA_EMAIL, email1);  
+			intent.putExtra(Intent.EXTRA_EMAIL,new String[] {email1}); 
 			intent.putExtra(Intent.EXTRA_SUBJECT, "Message from " + user);  
 			startActivity(Intent.createChooser(intent, "Send email using:")); 
 	    }
