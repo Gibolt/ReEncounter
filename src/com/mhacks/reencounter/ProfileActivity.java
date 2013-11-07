@@ -1,16 +1,5 @@
 package com.mhacks.reencounter;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpConnectionParams;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -23,11 +12,9 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.os.StrictMode;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.ListView;
 
 /**
  * Activity which displays a user's profile.
@@ -38,15 +25,14 @@ public class ProfileActivity extends Activity {
 	private TextView profileName;
 	private TextView profileUser;
 	private TextView profileDescription;
-	private ListView profilePhoneList;
 	private Button   profileEmail;
 	private Button   profileMessage;
 	private Button   profileCall;
 	private Button   profileAddContact;
+	private Button   profileViewEncounters;
 
 	String user, infoUser, password, otherUser;
 	String name, description, email1, email2, phone1, phone2;
-	long   id;
 	boolean messaging;
 
 	final String webUrl = "http://web.engr.illinois.edu/~reese6/MHacks/";
@@ -66,47 +52,34 @@ public class ProfileActivity extends Activity {
 		user     = b.getString("username");
 		password = b.getString("password");
 		infoUser = b.getString("infoUser");
-		id       = b.getLong("id");
 
 		profileName        = (TextView) findViewById(R.id.profileName);
 		profileUser        = (TextView) findViewById(R.id.profileUser);
 		profileDescription = (TextView) findViewById(R.id.profileDescription);
-		profilePhoneList   = (ListView) findViewById(R.id.profilePhoneList);
-		profileEmail       = (Button)   findViewById(R.id.profileEmail);
-		profileMessage     = (Button)   findViewById(R.id.profileMessage);
-		profileCall        = (Button)   findViewById(R.id.profileCall);
-		profileAddContact  = (Button)   findViewById(R.id.profileAddContact);
-		
+		profileEmail         = (Button) findViewById(R.id.profileEmail);
+		profileMessage       = (Button) findViewById(R.id.profileMessage);
+		profileCall          = (Button) findViewById(R.id.profileCall);
+		profileAddContact    = (Button) findViewById(R.id.profileAddContact);
+		profileViewEncounters= (Button) findViewById(R.id.profileViewEncounters);
+
 		profileEmail  .setVisibility(View.GONE);
 		profileMessage.setVisibility(View.GONE);
 		profileCall   .setVisibility(View.GONE);
 		sendJson();
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		getMenuInflater().inflate(R.menu.login, menu);
-		return true;
-	}
-
 	protected void sendJson() {
         Thread t = new Thread() {
             public void run() {
                 Looper.prepare(); //For Preparing Message Pool for the child Thread
-                HttpClient client = new DefaultHttpClient();
                 String usr = "?user=" + HtmlUtilities.enc(user)
       	    		   + "&password=" + HtmlUtilities.enc(password)
       	    		   + "&infoUser=" + HtmlUtilities.enc(infoUser);
-                HttpConnectionParams.setConnectionTimeout(client.getParams(), 10000);
-                HttpPost post = new HttpPost(queryUrl + usr);
+                String query = queryUrl + usr;
                 try {
-                	HttpResponse response = client.execute(post);
-            	    Log.w("output", queryUrl + usr);
-        		    String jsonResult = inputStreamToString(response.getEntity().getContent()).toString();
-        		    JSONObject obj = new JSONObject(jsonResult);
+                	Log.w("output", query);
+        		    JSONObject obj = HtmlUtilities.run(query);
         		    JSONArray array = obj.getJSONArray("posts");
-        			String[] list = new String[array.length()];
         			JSONObject responseJson = array.getJSONObject(0);
         			otherUser   = responseJson.getString("User");
         			name        = responseJson.getString("Name");
@@ -122,6 +95,7 @@ public class ProfileActivity extends Activity {
     	    				profileName.setText(name);
     	    				profileDescription.setText(description);
     	    				profileAddContact.setOnClickListener(profileAddContactHandler);
+    	    				profileViewEncounters.setOnClickListener(profileViewEncountersHandler);
     	    				if (StringUtilities.isEmail(email1)) {
     	    					profileEmail.setVisibility(View.VISIBLE);
     	    					profileEmail.setOnClickListener(profileEmailHandler);
@@ -136,8 +110,6 @@ public class ProfileActivity extends Activity {
     	    				}
     				    }
     				});
-    				list[0] = responseJson.getString("Phone");
-    				Log.w("output",list[0]);
                 } catch(Exception e) {
                     e.printStackTrace();
                 }
@@ -146,35 +118,19 @@ public class ProfileActivity extends Activity {
         };
         t.start();
     }
-	private StringBuilder inputStreamToString(InputStream is) {
-        String rLine = "";
-        StringBuilder answer = new StringBuilder();
-        BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-        try {
-        	while ((rLine = rd.readLine()) != null) {
-        		answer.append(rLine);
-        	}
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        return answer;
-    }
 
 	View.OnClickListener profileMessageHandler = new View.OnClickListener() {
 	    public void onClick(View v) {
 			Intent intent = new Intent(ProfileActivity.this, MessagingActivity.class);
 			intent.putExtra("username", user);
 			intent.putExtra("password", password);
-			intent.putExtra("id", id);
 			intent.putExtra("otherUser", infoUser);
 			startActivity(intent);
 	    }
 	};
 	View.OnClickListener profileEmailHandler = new View.OnClickListener() {
 	    public void onClick(View v) {
-//	    	Uri email = new Uri(email1);
-			Intent intent = new Intent(Intent.ACTION_SENDTO);
+			Intent intent = new Intent(Intent.ACTION_SEND);
 			intent.setType("text/plain");
 			intent.putExtra(Intent.EXTRA_EMAIL, email1);  
 			intent.putExtra(Intent.EXTRA_SUBJECT, "Message from " + user);  
@@ -196,6 +152,15 @@ public class ProfileActivity extends Activity {
 		    		   + "&otherUser=" + HtmlUtilities.enc(otherUser);
 		    Log.w("output", sub);
 	        HtmlUtilities.execute(sub);
+	    }
+	};
+	View.OnClickListener profileViewEncountersHandler = new View.OnClickListener() {
+	    public void onClick(View v) {
+			Intent intent = new Intent(ProfileActivity.this, EncounterActivity.class);
+			intent.putExtra("username", user);
+			intent.putExtra("password", password);
+			intent.putExtra("otherUser", infoUser);
+			startActivity(intent);
 	    }
 	};
 }

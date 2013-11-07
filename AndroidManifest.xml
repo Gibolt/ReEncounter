@@ -44,16 +44,16 @@
             android:label="@string/title_activity_rare" >
         </activity>
         <activity
-            android:name="com.mhacks.reencounter.ShowMapActivity"
-            android:label="@string/title_activity_show_map" >
-        </activity>
-        <activity
             android:name="com.mhacks.reencounter.ProfileActivity"
             android:label="@string/title_activity_profile" >
         </activity>
         <activity
             android:name="com.mhacks.reencounter.MessagingActivity"
             android:label="@string/title_activity_messaging" >
+        </activity>
+        <activity
+            android:name="com.mhacks.reencounter.EncounterActivity"
+            android:label="@string/title_activity_encounter" >
         </activity>
     </application>
 

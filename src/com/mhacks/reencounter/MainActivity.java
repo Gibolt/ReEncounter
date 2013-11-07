@@ -1,24 +1,18 @@
 package com.mhacks.reencounter;
 
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.HttpConnectionParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.mhacks.reencounter.R;
-import com.mhacks.reencounter.R.array;
-import com.mhacks.reencounter.R.layout;
 
 import android.app.ListActivity;
 import android.content.Context;
@@ -42,8 +36,6 @@ public class MainActivity extends ListActivity {
 	JSONObject obj = new JSONObject();
 	String user;
 	String pw;
-//	Toast.makeText(getApplicationContext(), user + pw, Toast.LENGTH_SHORT).show();
-	//obj.put("user", user);
 	final int INTERVAL = 1000*60*5; // 5 Minutes
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -71,7 +63,6 @@ public class MainActivity extends ListActivity {
 					Intent intent = new Intent(MainActivity.this, NewEncActivity.class);
 					intent.putExtra("username", user);
 					intent.putExtra("password", pw);
-					intent.putExtra("id", String.valueOf(position));
 					startActivity(intent);
 				}
 				//If Freq is clicked
@@ -79,7 +70,6 @@ public class MainActivity extends ListActivity {
 					Intent intent = new Intent(MainActivity.this, FreqActivity.class);
 					intent.putExtra("username", user);
 					intent.putExtra("password", pw);
-					intent.putExtra("id", String.valueOf(position));
 					startActivity(intent);
 				}
 				//If Rare is clicked
@@ -87,7 +77,6 @@ public class MainActivity extends ListActivity {
 					Intent intent = new Intent(MainActivity.this, RareActivity.class);
 					intent.putExtra("username", user);
 					intent.putExtra("password", pw);
-					intent.putExtra("id", String.valueOf(position));
 					startActivity(intent);
 				}
 				//If Messaging is clicked
@@ -95,7 +84,6 @@ public class MainActivity extends ListActivity {
 					Intent intent = new Intent(MainActivity.this, MessagingActivity.class);
 					intent.putExtra("username", user);
 					intent.putExtra("password", pw);
-					intent.putExtra("id", String.valueOf(position));
 					intent.putExtra("otherUser", "Jerry");
 					startActivity(intent);
 				}
@@ -103,17 +91,14 @@ public class MainActivity extends ListActivity {
 					Intent intent = new Intent(MainActivity.this, ShowMapActivity.class);
 					intent.putExtra("username", user);
 					intent.putExtra("password", pw);
-					intent.putExtra("id", String.valueOf(position));
 					intent.putExtra("otherUser", "Jerry");
 					startActivity(intent);
 				}
 			}
 		});
-	    
 	}
 	protected void sendJson(final JSONObject param) {
         Thread t = new Thread() {
-
             public void run() {
                 Looper.prepare(); //For Preparing Message Pool for the child Thread
                 HttpClient client = new DefaultHttpClient();
@@ -127,20 +112,15 @@ public class MainActivity extends ListActivity {
                 			   + "&timestamp="+ HtmlUtilities.enc(json.getString("time"))
                 			   + "&lat="      + HtmlUtilities.enc(json.getString("lat"))
                 			   + "&lon="      + HtmlUtilities.enc(json.getString("lon"));
-                	Log.i("output", usr);
-                	HttpGet post = new HttpGet(getString(R.string.endpoint) + "commit.php" + usr);
-                    response = client.execute(post);
-
-                    /*Checking response */
+                	String query = getString(R.string.endpoint) + "commit.php" + usr;
+                	Log.i("output", query);
+                    response = HtmlUtilities.execute(query);
                     if(response!=null){
                         InputStream in = response.getEntity().getContent(); //Get the data in the entity
                     }
-
                 } catch(Exception e) {
                     e.printStackTrace();
-                    //createDialog("Error", "Cannot Establish Connection");
                 }
-
                 Looper.loop(); //Loop in the message queue
             }
         };
@@ -161,13 +141,10 @@ public class MainActivity extends ListActivity {
 			/* date formatter in local timezone */
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:00");
 			sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-			
+
 			double lat = loc.getLatitude();
 			double lon = loc.getLongitude();
-			//long time = loc.getTime();
-			/* print your timestamp and double check it's the date you expect */
-			//String localTime = sdf.format(new Date(time * 1000)); // I assume your timestamp is in seconds and you're converting to milliseconds?
-			
+
 			String Text = "My current location is: " + "Latitude = " + lat + "Longitud = " + lon + "Time = "+ sdf.format(date);
 			Toast.makeText(getApplicationContext(),Text,Toast.LENGTH_SHORT).show();
 			Log.v("Output", Text); //logs the current latitude in 	
@@ -180,7 +157,6 @@ public class MainActivity extends ListActivity {
 				obj.put("lon", lon);
 				sendJson(obj);
 			}catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
 			Log.v("obj",obj.toString());

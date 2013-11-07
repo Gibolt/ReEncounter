@@ -17,7 +17,7 @@
     <string name="title_activity_freq">FreqActivity</string>
     <string name="title_activity_rare">RareActivity</string>
     <string name="title_activity_map">MapActivity</string>
-    <string name="title_activity_show_map">ShowMapActivity</string>
+    <string name="title_activity_encounter">ShowMapActivity</string>
     <string name="endpoint">http://web.engr.illinois.edu/~reese6/MHacks/</string>
     
 </resources>

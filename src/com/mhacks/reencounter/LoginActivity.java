@@ -1,8 +1,6 @@
 package com.mhacks.reencounter;
 
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -11,10 +9,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.HttpConnectionParams;
 
 import com.mhacks.reencounter.R;
-import com.mhacks.reencounter.R.id;
-import com.mhacks.reencounter.R.layout;
-import com.mhacks.reencounter.R.menu;
-import com.mhacks.reencounter.R.string;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -56,13 +50,10 @@ public class LoginActivity extends Activity {
 	 */
 	private UserLoginTask mAuthTask = null;
 
-	// Values for email and password at the time of the login attempt.
 	private String mEmail;
 	private String mUsername;
 	private String mPassword;
 
-	// UI references.
-	private EditText mEmailView;
 	private EditText mUsernameView;
 	private EditText mPasswordView;
 	private View mLoginFormView;
