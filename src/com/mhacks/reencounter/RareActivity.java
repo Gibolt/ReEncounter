@@ -14,6 +14,10 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.mhacks.reencounter.R;
+import com.mhacks.reencounter.R.layout;
+import com.mhacks.reencounter.R.menu;
+
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -36,11 +40,11 @@ public class RareActivity extends ListActivity {
 		String password = b.getString("password");
 
 		HttpClient defaultClient = new DefaultHttpClient();
-	    String usr = "?user="     + user
-	    		   + "&password=" + password
+	    String usr = "?user="     + HtmlUtilities.enc(user)
+	    		   + "&password=" + HtmlUtilities.enc(password)
 	    		   + "&min_num="  + 4
 	    		   + "&max_num="  + 7;
-	    HttpPost httpPostRequest = new HttpPost("http://web.engr.illinois.edu/~reese6/MHacks/queryRare.php"+usr);
+	    HttpPost httpPostRequest = new HttpPost(getString(R.string.endpoint) + "queryRare.php" + usr);
 		try {
 		    HttpResponse response = defaultClient.execute(httpPostRequest);
 		    String jsonResult = inputStreamToString(response.getEntity().getContent()).toString();

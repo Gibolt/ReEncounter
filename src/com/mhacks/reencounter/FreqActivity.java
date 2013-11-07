@@ -14,6 +14,10 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.mhacks.reencounter.R;
+import com.mhacks.reencounter.R.layout;
+import com.mhacks.reencounter.R.menu;
+
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -38,13 +42,12 @@ public class FreqActivity extends ListActivity {
         // Create a new HTTP Client
         HttpClient defaultClient = new DefaultHttpClient();
         // Setup the get request
-        String usr = "?user=" + username
-                + "&password=" + password
-                + "&num="      + 8;
-        HttpPost httpPostRequest = new HttpPost("http://web.engr.illinois.edu/~reese6/MHacks/queryFrequent.php"+usr);
+        String usr = "?user="    + HtmlUtilities.enc(username)
+                   + "&password="+ HtmlUtilities.enc(password)
+                   + "&num="     + 8;
         try {
             // Execute the request in the client
-            HttpResponse response = defaultClient.execute(httpPostRequest);
+            HttpResponse response = HtmlUtilities.execute(getString(R.string.endpoint) + "queryFrequent.php"+usr);
             // Grab the response
             String jsonResult = inputStreamToString(response.getEntity().getContent()).toString();
             JSONObject obj = new JSONObject(jsonResult);
@@ -57,7 +60,6 @@ public class FreqActivity extends ListActivity {
 
             setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, list));
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         //Toast toast=Toast.makeText(this, "Index: " + ans, Toast.LENGTH_SHORT);

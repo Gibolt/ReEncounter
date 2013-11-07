@@ -16,6 +16,10 @@ import org.apache.http.params.HttpConnectionParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.mhacks.reencounter.R;
+import com.mhacks.reencounter.R.array;
+import com.mhacks.reencounter.R.layout;
+
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -71,7 +75,7 @@ public class MainActivity extends ListActivity {
 					startActivity(intent);
 				}
 				//If Freq is clicked
-				else if(position==1){
+				else if (position==1){
 					Intent intent = new Intent(MainActivity.this, FreqActivity.class);
 					intent.putExtra("username", user);
 					intent.putExtra("password", pw);
@@ -79,7 +83,7 @@ public class MainActivity extends ListActivity {
 					startActivity(intent);
 				}
 				//If Rare is clicked
-				else if(position==2){
+				else if (position==2){
 					Intent intent = new Intent(MainActivity.this, RareActivity.class);
 					intent.putExtra("username", user);
 					intent.putExtra("password", pw);
@@ -87,18 +91,20 @@ public class MainActivity extends ListActivity {
 					startActivity(intent);
 				}
 				//If Messaging is clicked
-				else if(position==3){
+				else if (position==3){
 					Intent intent = new Intent(MainActivity.this, MessagingActivity.class);
 					intent.putExtra("username", user);
 					intent.putExtra("password", pw);
 					intent.putExtra("id", String.valueOf(position));
+					intent.putExtra("otherUser", "Jerry");
 					startActivity(intent);
 				}
-				else{
+				else {
 					Intent intent = new Intent(MainActivity.this, ShowMapActivity.class);
 					intent.putExtra("username", user);
 					intent.putExtra("password", pw);
 					intent.putExtra("id", String.valueOf(position));
+					intent.putExtra("otherUser", "Jerry");
 					startActivity(intent);
 				}
 			}
@@ -114,15 +120,15 @@ public class MainActivity extends ListActivity {
                 HttpConnectionParams.setConnectionTimeout(client.getParams(), 10000); //Timeout Limit
                 HttpResponse response;
                 JSONObject json = param;
-               
+
                 try {
-                	String usr = "?user="+enc(json.getString("user")) + "&password="+enc(json.getString("password"))+"&timestamp="+enc(json.getString("time"))+"&lat="+enc(json.getString("lat"))+"&lon="+enc(json.getString("lon"));
-                    //usr = URLEncoder.encode(usr, "ISO-8859-1");
+                	String usr = "?user="     + HtmlUtilities.enc(json.getString("user"))
+                			   + "&password=" + HtmlUtilities.enc(json.getString("password"))
+                			   + "&timestamp="+ HtmlUtilities.enc(json.getString("time"))
+                			   + "&lat="      + HtmlUtilities.enc(json.getString("lat"))
+                			   + "&lon="      + HtmlUtilities.enc(json.getString("lon"));
                 	Log.i("output", usr);
-                	HttpGet post = new HttpGet("http://web.engr.illinois.edu/~reese6/MHacks/commit.php"+usr);
-                   /* StringEntity se = new StringEntity(usr);  
-                    se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-                    post.setEntity(se);*/
+                	HttpGet post = new HttpGet(getString(R.string.endpoint) + "commit.php" + usr);
                     response = client.execute(post);
 
                     /*Checking response */
@@ -141,15 +147,6 @@ public class MainActivity extends ListActivity {
 
         t.start();      
     }
-	private String enc(String str) {
-		try {
-			return URLEncoder.encode(str, "ISO-8859-1");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return str;
-	}
 	/* Class My Location Listener */
 	public class MyLocationListener implements LocationListener
 	{

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="title_activity_messaging">Messaging</string>
+
+    <!-- Strings related to messaging -->
+    <string name="messaging_send_button">Send</string>
+    <string name="messaging_enter_text">Enter Message</string>
+
+</resources>

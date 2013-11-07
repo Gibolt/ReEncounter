@@ -13,7 +13,7 @@ if(isset($_GET['user']) && isset($_GET['password'])) {
 							  Where User='$user'
 							  Limit 1";
 	$select_messages = "Select * from Message
-						Where (Sender='$user' Or Recipient='$user') And (Time >= ($select_message_update))
+						Where Recipient='$user' And Time >= ($select_message_update)
 						Order By Time Desc;";
 	$date = date('Y-m-d H:i:s',time());
 	$update_message_update = "Update MessageUpdate

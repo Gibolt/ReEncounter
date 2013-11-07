@@ -10,6 +10,12 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.HttpConnectionParams;
 
+import com.mhacks.reencounter.R;
+import com.mhacks.reencounter.R.id;
+import com.mhacks.reencounter.R.layout;
+import com.mhacks.reencounter.R.menu;
+import com.mhacks.reencounter.R.string;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -98,7 +104,7 @@ public class LoginActivity extends Activity {
 				attemptLogin();
 			}
 		});
-		
+
 		findViewById(R.id.register_button).setOnClickListener(
 				new View.OnClickListener() {
 			@Override
@@ -106,7 +112,6 @@ public class LoginActivity extends Activity {
 				attemptRegister();
 			}
 		});
-		
 	}
 
 	@Override
@@ -124,13 +129,11 @@ public class LoginActivity extends Activity {
                 HttpConnectionParams.setConnectionTimeout(client.getParams(), 10000); //Timeout Limit
                 HttpResponse response;
                 try {
-                	String usr = "?user="     + enc(mUsername)
-                			   + "&password=" + enc(mPassword)
-                			   + "&email="    + enc(mEmail);
-                    HttpGet post = new HttpGet("http://web.engr.illinois.edu/~reese6/MHacks/newUser.php" + usr);
-                    //StringEntity se = new StringEntity(usr);  
-                    //se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-                    //post.setEntity(se);
+                	String usr = "?user="     + HtmlUtilities.enc(mUsername)
+                			   + "&password=" + HtmlUtilities.enc(mPassword)
+                			   + "&email="    + HtmlUtilities.enc(mEmail);
+
+                    HttpGet post = new HttpGet(getString(R.string.endpoint) + "newUser.php" + usr);
                     response = client.execute(post);
 
                     /*Checking response */
@@ -144,17 +147,8 @@ public class LoginActivity extends Activity {
                 Looper.loop(); //Loop in the message queue
             }
         };
-        t.start();      
+        t.start();
     }
-	private String enc(String str) {
-		try {
-			return URLEncoder.encode(str, "ISO-8859-1");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return str;
-	}
 	/**
 	 * Attempts to sign in or register the account specified by the login form.
 	 * If there are form errors (invalid email, missing fields, etc.), the
@@ -181,7 +175,7 @@ public class LoginActivity extends Activity {
 			mPasswordView.setError(getString(R.string.error_field_required));
 			focusView = mPasswordView;
 			cancel = true;
-		} else if (mPassword.length() < 4) {
+		} else if (mPassword.length() < 3) {
 			mPasswordView.setError(getString(R.string.error_invalid_password));
 			focusView = mPasswordView;
 			cancel = true;
@@ -207,7 +201,7 @@ public class LoginActivity extends Activity {
 			mAuthTask.execute((Void) null);
 		}
 	}
-	
+
 	public void attemptRegister() {
 		if (mAuthTask != null) {
 			return;
@@ -229,7 +223,7 @@ public class LoginActivity extends Activity {
 			mPasswordView.setError(getString(R.string.error_field_required));
 			focusView = mPasswordView;
 			cancel = true;
-		} else if (mPassword.length() < 4) {
+		} else if (mPassword.length() < 3) {
 			mPasswordView.setError(getString(R.string.error_invalid_password));
 			focusView = mPasswordView;
 			cancel = true;
