@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <uses-sdk
         android:minSdkVersion="9"
@@ -16,7 +17,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name="com.mhacks.reencounter.LoginActivity"
             android:label="@string/app_name" >
@@ -59,6 +60,11 @@
             android:name="com.mhacks.reencounter.ContactsActivity"
             android:label="@string/title_activity_contacts" >
         </activity>
+        <service
+            android:name="com.mhacks.reencounter.LocationUpdateService"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/title_service_location_update" >
+        </service>
     </application>
 
 </manifest>

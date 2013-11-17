@@ -15,7 +15,7 @@ import android.widget.EditText;
  */
 public class MessagingActivity extends ListActivity {
 	String user;
-	String password;
+	String pass;
 	String otherUser;
 
 	private Bundle b;

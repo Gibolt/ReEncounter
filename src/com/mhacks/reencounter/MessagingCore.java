@@ -6,6 +6,8 @@ import org.json.JSONException;
 import com.mhacks.reencounter.util.AndroidUtilities;
 import com.mhacks.reencounter.util.HtmlUtilities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 /**
@@ -16,10 +18,19 @@ public final class MessagingCore {
     final static String queryUrl  = webUrl + "queryMessages.php";
     final static String submitUrl = webUrl + "sendMessage.php";
 
+    protected static Intent messagingIntent(Context c, String user, String pass, String otherUser) {
+        Intent intent = new Intent(c, MessagingActivity.class);
+        intent.putExtra("user", user);
+        intent.putExtra("pass", pass);
+        intent.putExtra("otherUser", "Jerry");
+        return intent;
+    }
+
     protected static boolean sendMessage(String message, Bundle b) {
         if (message.length() == 0) {
             return false;
         }
+        message = message.trim();
         String request = submitUrl(message, b);
         AndroidUtilities.log("Send Message Request", request);
         return submitMessage(request);
@@ -33,29 +44,28 @@ public final class MessagingCore {
     }
 
     private static String submitUrl(String message, Bundle b) {
-        String user      = b.getString("username");
-        String password  = b.getString("password");
+        String user      = b.getString("user");
+        String pass      = b.getString("pass");
         String otherUser = b.getString("otherUser");
-        String var = submitUrl
-                   + "?user="      + HtmlUtilities.enc(user)
-                   + "&password="  + HtmlUtilities.enc(password)
+        String var = "?user="      + HtmlUtilities.enc(user)
+                   + "&password="  + HtmlUtilities.enc(pass)
                    + "&otherUser=" + HtmlUtilities.enc(otherUser)
                    + "&message="   + HtmlUtilities.enc(message);
         return submitUrl + var;
     }
 
     private static String queryUrl(Bundle b) {
-        String user      = b.getString("username");
-        String password  = b.getString("password");
+        String user      = b.getString("user");
+        String pass      = b.getString("pass");
         String otherUser = b.getString("otherUser");
         String var = "?user="     + HtmlUtilities.enc(user)
-                   + "&password=" + HtmlUtilities.enc(password)
+                   + "&password=" + HtmlUtilities.enc(pass)
                    + "&otherUser="+ HtmlUtilities.enc(otherUser);
         return queryUrl + var;
     }
 
     private static boolean submitMessage(String request) {
-        HtmlUtilities.execute(request);
+        HtmlUtilities.executeResponseless(request);
         return true;
     }
 

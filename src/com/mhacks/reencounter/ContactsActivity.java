@@ -21,7 +21,7 @@ import android.widget.ArrayAdapter;
  */
 public class ContactsActivity extends ListActivity {
 	String user;
-	String password;
+	String pass;
 	ArrayList<String> contacts = new ArrayList<String>();
 
 	final String webUrl = "http://web.engr.illinois.edu/~reese6/MHacks/";
@@ -36,15 +36,15 @@ public class ContactsActivity extends ListActivity {
 		    StrictMode.setThreadPolicy(policy);
 		}
 		Bundle b = getIntent().getExtras();
-		user = b.getString("username");
-		password = b.getString("password");
+		user = b.getString("user");
+		pass = b.getString("pass");
 
-	    String con= "?user="	+ HtmlUtilities.enc(user)
-                  + "&password="+ HtmlUtilities.enc(password);
-	    String query = queryUrl + con;
+	    String var= "?user="	+ HtmlUtilities.enc(user)
+                  + "&password="+ HtmlUtilities.enc(pass);
+	    String query = queryUrl + var;
 	    Log.w("output", query);
 		try {
-		    JSONArray array = HtmlUtilities.run(query).getJSONArray("posts");
+		    JSONArray array = HtmlUtilities.requestResponse(query).getJSONArray("posts");
 			String[] list = new String[array.length()];
 			for(int i = 0; i < array.length();i++){
 				contacts.add(array.getJSONObject(i).getString("Contact"));
@@ -59,11 +59,10 @@ public class ContactsActivity extends ListActivity {
 
 	AdapterView.OnItemClickListener viewContactHandler = new AdapterView.OnItemClickListener() {
 		@Override
-		public void onItemClick(AdapterView<?> parent, View view,
-				int pos, long id) {
+		public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
 			Intent intent = new Intent(ContactsActivity.this, ProfileActivity.class);
-			intent.putExtra("username", user);
-			intent.putExtra("password", password);
+			intent.putExtra("user", user);
+			intent.putExtra("pass", pass);
 			intent.putExtra("infoUser", contacts.get(pos));
 			startActivity(intent);
 		}

@@ -19,6 +19,6 @@
     <string name="title_activity_rare">RareActivity</string>
     <string name="title_activity_encounter">Encounters</string>
     <string name="endpoint">http://web.engr.illinois.edu/~reese6/MHacks/</string>
-    <string name="location_update_service">LocationUpdateService</string>
+    <string name="title_service_location_update">LocationUpdateService</string>
     
 </resources>
