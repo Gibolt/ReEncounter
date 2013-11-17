@@ -11,6 +11,7 @@
         <item>Rare</item>
         <item>Messaging</item>
         <item>Contacts</item>
+        <item>Get Location</item>
     </string-array>
 
     <string name="title_activity_new_enc">NewEncActivity</string>
@@ -18,5 +19,6 @@
     <string name="title_activity_rare">RareActivity</string>
     <string name="title_activity_encounter">Encounters</string>
     <string name="endpoint">http://web.engr.illinois.edu/~reese6/MHacks/</string>
+    <string name="location_update_service">LocationUpdateService</string>
     
 </resources>

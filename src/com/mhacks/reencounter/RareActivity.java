@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.mhacks.reencounter.R;
+import com.mhacks.reencounter.util.HtmlUtilities;
 
 import android.app.ListActivity;
 import android.os.Bundle;

@@ -9,6 +9,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.HttpConnectionParams;
 
 import com.mhacks.reencounter.R;
+import com.mhacks.reencounter.util.HtmlUtilities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

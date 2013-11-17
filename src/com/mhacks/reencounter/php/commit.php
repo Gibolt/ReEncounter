@@ -1,10 +1,10 @@
 <?php
-if(isset($_GET['user']) && isset($_GET['password']) && isset($_GET['timestamp']) && isset($_GET['lat']) && isset($_GET['long'])) {
+if(isset($_GET['user']) && isset($_GET['password']) && isset($_GET['timestamp']) && isset($_GET['lat']) && isset($_GET['lon'])) {
 	include 'globalFunctions.php';
 	$user     = strtolower($_GET['user']);
 	$password = strtolower($_GET['password']);
 	$lat      = floatval($_GET['lat']);
-	$lon      = floatval($_GET['long']);
+	$lon      = floatval($_GET['lon']);
 	$time     = $_GET['timestamp'];
 
 	$defaultDegree = 1/69;

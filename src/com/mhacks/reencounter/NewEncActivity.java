@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 
 import com.mhacks.reencounter.R;
+import com.mhacks.reencounter.util.HtmlUtilities;
 
 import android.app.ListActivity;
 import android.content.Intent;
