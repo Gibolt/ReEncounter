@@ -8,7 +8,6 @@ import com.mhacks.reencounter.util.HtmlUtilities;
 
 import android.app.ListActivity;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 

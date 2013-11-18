@@ -15,11 +15,23 @@ public class LocationCore {
     final static String webUrl    = HtmlUtilities.endpoint;
     final static String submitUrl = webUrl + "commit.php";
     final static int INTERVAL = Settings.locationUpdateInterval;
+    static AlarmManager alarm = null;
+    static PendingIntent intent;
 
     protected static void startTimedLocationUpdate(Context c, Intent intent, AlarmManager alarm) {
         Calendar cal = Calendar.getInstance();
-        PendingIntent pintent = PendingIntent.getService(c, 0, intent, 0);
-        alarm.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), INTERVAL, pintent); 
+        LocationCore.alarm = alarm;
+        LocationCore.intent = PendingIntent.getService(c, 0, intent, 0);
+        alarm.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), LocationCore.INTERVAL, LocationCore.intent); 
+    }
+    
+    protected static boolean endTimedLocationUpdate() {
+    	if (alarm != null) {    		
+    		alarm.cancel(intent);
+    		alarm = null;
+    		return true;
+    	}
+    	return false;
     }
 
     protected static Intent locationIntent(Context c, String user, String pass) {

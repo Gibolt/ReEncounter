@@ -4,7 +4,6 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.IBinder;
 
 import com.mhacks.reencounter.MyLocation.LocationResult;
 import com.mhacks.reencounter.util.AndroidUtilities;

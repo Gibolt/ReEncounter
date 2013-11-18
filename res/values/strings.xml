@@ -12,7 +12,9 @@
         <item>Messaging</item>
         <item>Contacts</item>
         <item>Get Location</item>
-    </string-array>
+        <item>End Location</item>
+        <item>Logout</item>
+        </string-array>
 
     <string name="title_activity_new_enc">NewEncActivity</string>
     <string name="title_activity_freq">FreqActivity</string>

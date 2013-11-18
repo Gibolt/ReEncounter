@@ -80,6 +80,18 @@ public class MainActivity extends ListActivity {
                     Intent intent = LocationCore.locationIntent(MainActivity.this, user, pass);
                     LocationCore.startTimedLocationUpdate(MainActivity.this, intent, alarm);
                 }
+                //If End Location is clicked
+                else if (position==6){
+                    if (LocationCore.endTimedLocationUpdate()) {
+                        Toast.makeText(MainActivity.this, "Terminating Updates", Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                    	Toast.makeText(MainActivity.this, "Location Service Off", Toast.LENGTH_LONG).show();
+                    }
+                }
+                //If Logout is clicked
+                else if (position == 7){
+                }
             }
         });
     }

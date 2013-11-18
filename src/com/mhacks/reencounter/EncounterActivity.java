@@ -5,13 +5,11 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 
 import com.mhacks.reencounter.R;
+import com.mhacks.reencounter.util.ExternalUtilities;
 import com.mhacks.reencounter.util.HtmlUtilities;
 
 import android.app.ListActivity;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -66,11 +64,7 @@ public class EncounterActivity extends ListActivity {
     AdapterView.OnItemClickListener viewEncounterHandler = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-            String lat = lats.get(pos), lon = lons.get(pos);
-            String uri = "geo:" + lat + "," + lon + "?q=" + lat + "," + lon + "(Encounter)";
-            Log.w("output",uri);
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-            startActivity(intent);
+            ExternalUtilities.viewMap(EncounterActivity.this, lats.get(pos), lons.get(pos), "Encounter");
         }
     };
 }
