@@ -49,6 +49,10 @@
             android:label="@string/title_activity_profile" >
         </activity>
         <activity
+            android:name="com.mhacks.reencounter.ProfileUpdateActivity"
+            android:label="@string/title_activity_profile_update" >
+        </activity>
+        <activity
             android:name="com.mhacks.reencounter.MessagingActivity"
             android:label="@string/title_activity_messaging" >
         </activity>
@@ -59,6 +63,10 @@
         <activity
             android:name="com.mhacks.reencounter.ContactsActivity"
             android:label="@string/title_activity_contacts" >
+        </activity>
+        <activity
+            android:name="com.mhacks.reencounter.HiddenLocationActivity"
+            android:label="@string/title_activity_hidden_location" >
         </activity>
         <service
             android:name="com.mhacks.reencounter.LocationUpdateService"

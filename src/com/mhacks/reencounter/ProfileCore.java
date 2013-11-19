@@ -15,13 +15,21 @@ public class ProfileCore {
     final static String webUrl   = HtmlUtilities.endpoint;
     final static String queryUrl = webUrl + "queryUserInfo.php";
     final String addContactUrl = webUrl + "addContact.php";
-    
+
     protected static Intent profileIntent(Context c, String user, String pass, String infoUser) {
-        Intent intent = new Intent(c, MessagingActivity.class);
+        Intent intent = new Intent(c, ProfileActivity.class);
         intent.putExtra("user", user);
         intent.putExtra("pass", pass);
         intent.putExtra("infoUser", infoUser);
         return intent;
+    }
+    
+    protected static Intent profileUpdateIntent(Context c, String user, String pass) {
+    	Intent intent = new Intent(c, ProfileUpdateActivity.class);
+    	intent.putExtra("user", user);
+    	intent.putExtra("pass", pass);
+    	intent.putExtra("infoUser", user);
+    	return intent;
     }
 
     protected static JSONArray queryProfile(Bundle b) {
@@ -34,8 +42,6 @@ public class ProfileCore {
         String user     = b.getString("user");
         String pass     = b.getString("pass");
         String infoUser = b.getString("infoUser");
-        int min = b.getInt("min");
-        int max = b.getInt("max");
         String var = "?user="     + HtmlUtilities.enc(user)
                    + "&password=" + HtmlUtilities.enc(pass)
                    + "&infoUser=" + HtmlUtilities.enc(infoUser);
@@ -69,7 +75,7 @@ public class ProfileCore {
             }
         };
     }
-    
+
     protected static View.OnClickListener viewEncountersHandler(final Context c, final String user, final String pass, final String otherUser) {
         return new View.OnClickListener() {
             public void onClick(View v) {

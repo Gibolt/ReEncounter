@@ -12,10 +12,11 @@ import android.location.LocationManager;
 import android.os.Bundle;
 
 public class MyLocation {
-    int INTERVAL = 1000 * 10;
+    int INTERVAL = 1000 * 40; // 40 seconds
     Timer timer1;
     LocationManager lm;
     LocationResult locationResult;
+    public static Location location;
     boolean gps_enabled = false;
     boolean network_enabled = false;
 
@@ -39,7 +40,7 @@ public class MyLocation {
         if(network_enabled)
             lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListenerNetwork);
         timer1 = new Timer();
-        timer1.schedule(new GetLastLocation(), 30000);
+        timer1.schedule(new GetLastLocation(), INTERVAL);
         return true;
     }
 
@@ -77,9 +78,9 @@ public class MyLocation {
 
              Location net_loc=null, gps_loc=null;
              if(gps_enabled)
-                 gps_loc=lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                 gps_loc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
              if(network_enabled)
-                 net_loc=lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                 net_loc = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
              //if there are both values use the latest one
              if(gps_loc!=null && net_loc!=null){
@@ -91,10 +92,12 @@ public class MyLocation {
              }
 
              if(gps_loc!=null){
+            	 location = gps_loc;
                  locationResult.gotLocation(gps_loc);
                  return;
              }
              if(net_loc!=null){
+            	 location = net_loc;
                  locationResult.gotLocation(net_loc);
                  return;
              }

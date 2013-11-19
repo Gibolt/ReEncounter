@@ -21,16 +21,13 @@ import android.widget.AdapterView.OnItemClickListener;
  * Activity which displays users you have been near a few times.
  */
 public class NewEncActivity extends ListActivity {
-    String user;
-    String pass;
+    final int max = 3;
+    String user, pass;
     ArrayList<String> otherUsers = new ArrayList<String>();
     ArrayList<Integer> times = new ArrayList<Integer>();
 
     final String webUrl = "http://web.engr.illinois.edu/~reese6/MHacks/";
-//    final String webUrl = getString(R.string.endpoint);
-    int i = 0;
     final String queryUrl = webUrl + "queryNew.php";
-    final int maxNum = 3;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +40,7 @@ public class NewEncActivity extends ListActivity {
 
         String usr = "?user="     + HtmlUtilities.enc(user)
                    + "&password=" + HtmlUtilities.enc(pass)
-                   + "&num="      + maxNum;
+                   + "&max="      + max;
         String query = queryUrl + usr;
         Log.w("output", query);
         try {
@@ -63,12 +60,8 @@ public class NewEncActivity extends ListActivity {
         ListView lv = getListView();
         lv.setTextFilterEnabled(true);
         lv.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view,
-                    int position, long id) {
-                Intent intent = new Intent(NewEncActivity.this, ProfileActivity.class);
-                intent.putExtra("user", user);
-                intent.putExtra("pass", pass);
-                intent.putExtra("infoUser", otherUsers.get(position));
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = ProfileCore.profileIntent(NewEncActivity.this, user, pass, otherUsers.get(position));
                 startActivity(intent);
             }
         });

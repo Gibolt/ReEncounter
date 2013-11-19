@@ -41,47 +41,42 @@ public class MainActivity extends ListActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                     int position, long id) {
                 //If New Encounter is clicked
-                if(position==0){
+                if(position == 0) {
                     Intent intent = new Intent(MainActivity.this, NewEncActivity.class);
                     intent.putExtra("user", user);
                     intent.putExtra("pass", pass);
                     startActivity(intent);
                 }
+                //If Rare is clicked
+                else if (position == 1) {
+                	Intent intent = new Intent(MainActivity.this, RareActivity.class);
+                	intent.putExtra("user", user);
+                	intent.putExtra("pass", pass);
+                	startActivity(intent);
+                }
                 //If Freq is clicked
-                else if (position==1){
+                else if (position == 2) {
                     Intent intent = new Intent(MainActivity.this, FreqActivity.class);
                     intent.putExtra("user", user);
                     intent.putExtra("pass", pass);
                     startActivity(intent);
                 }
-                //If Rare is clicked
-                else if (position==2){
-                    Intent intent = new Intent(MainActivity.this, RareActivity.class);
-                    intent.putExtra("user", user);
-                    intent.putExtra("pass", pass);
-                    startActivity(intent);
-                }
-                //If Messaging is clicked
-                else if (position==3){
-                    Intent intent = MessagingCore.messagingIntent(MainActivity.this, user, pass, "Jerry");
-                    startActivity(intent);
-                }
                 //If Contacts is clicked
-                else if (position==4){
+                else if (position == 3) {
                     Intent intent = new Intent(MainActivity.this, ContactsActivity.class);
                     intent.putExtra("user", user);
                     intent.putExtra("pass", pass);
                     startActivity(intent);
                 }
                 //If Get Location is clicked
-                else if (position==5){
+                else if (position == 4) {
                     Toast.makeText(MainActivity.this, "Updating Location", Toast.LENGTH_LONG).show();
                     AlarmManager alarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                     Intent intent = LocationCore.locationIntent(MainActivity.this, user, pass);
                     LocationCore.startTimedLocationUpdate(MainActivity.this, intent, alarm);
                 }
                 //If End Location is clicked
-                else if (position==6){
+                else if (position == 5) {
                     if (LocationCore.endTimedLocationUpdate()) {
                         Toast.makeText(MainActivity.this, "Terminating Updates", Toast.LENGTH_LONG).show();
                     }
@@ -89,8 +84,20 @@ public class MainActivity extends ListActivity {
                     	Toast.makeText(MainActivity.this, "Location Service Off", Toast.LENGTH_LONG).show();
                     }
                 }
+                //If Hidden Locations is clicked
+                else if (position == 6) {
+                	Intent intent = new Intent(MainActivity.this, HiddenLocationActivity.class);
+                    intent.putExtra("user", user);
+                    intent.putExtra("pass", pass);
+                    startActivity(intent);
+                }
+                //If Profile is clicked
+                else if (position == 8) {
+                	Intent intent = ProfileCore.profileUpdateIntent(MainActivity.this, user, pass);
+                    startActivity(intent);
+                }
                 //If Logout is clicked
-                else if (position == 7){
+                else if (position == 9) {
                 }
             }
         });

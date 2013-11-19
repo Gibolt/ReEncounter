@@ -14,6 +14,7 @@ public class LocationUpdateService extends IntentService {
     private final String webUrl = HtmlUtilities.endpoint + "commit.php";
     private String user, pass;
     private String lat, lon, time;
+    public static Location loc;
 
     public LocationUpdateService() {
         super("LocationUpdateService");
@@ -32,6 +33,7 @@ public class LocationUpdateService extends IntentService {
             @Override
             public void gotLocation(Location location){
                 time = StringUtilities.currentDate();
+                LocationUpdateService.loc = location;
                 sendLocation(location);
             }
         };

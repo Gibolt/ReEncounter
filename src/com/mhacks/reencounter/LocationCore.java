@@ -70,14 +70,7 @@ public class LocationCore {
         if (lat < -90 || lat > 90 || lon < -180 || lon > 180) {
             return false;
         }
-        if (isHidden(lat, lon)) {
-            return false;
-        }
-        return true;
-    }
-    
-    private static boolean isHidden(double lat, double lon) {
-        return false;
+        return HiddenLocationList.isHidden(lat, lon);
     }
 
     private static boolean submitLocation(String request) {

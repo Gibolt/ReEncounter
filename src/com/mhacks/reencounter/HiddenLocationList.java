@@ -37,6 +37,10 @@ public class HiddenLocationList {
     protected static void removeLocation(String lat, String lon) {
         removeLocation(Double.parseDouble(lat), Double.parseDouble(lon));
     }
+    
+    protected static void removeLocation(Location location) {
+    	removeLocation(location.getLatitude(), location.getLongitude());
+    }
 
     protected static boolean isHidden(double lat, double lon) {
         for (HiddenLocation location: list) {
@@ -49,6 +53,15 @@ public class HiddenLocationList {
 
     protected static boolean isHidden(Location location) {
         return isHidden(location.getLatitude(), location.getLongitude());
+    }
+    
+    protected static String[] toArray() {
+        String[] array = new String[list.size()];
+        int i=0;
+        for (HiddenLocation location: list) {
+            array[i++] = location.toString();
+        }
+        return array;
     }
 }
 
@@ -77,6 +90,12 @@ final class HiddenLocation {
     public boolean equals(Object o) {
         HiddenLocation location = (HiddenLocation) o;
         return (location.lat == this.lat && location.lon == this.lon);
+    }
+
+    @Override
+    public String toString() {
+        String string = "Lat: " + this.lat + ", Lon: " + this.lon + ", Rad: " + this.rad;
+        return string;
     }
 
     private static double distance(double lat1, double lon1, double lat2, double lon2, char unit) {

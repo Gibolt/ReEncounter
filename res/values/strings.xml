@@ -7,12 +7,14 @@
 
     <string-array name="list_array">
         <item>New</item>
-        <item>Freq</item>
         <item>Rare</item>
+        <item>Freq</item>
         <item>Messaging</item>
         <item>Contacts</item>
         <item>Get Location</item>
         <item>End Location</item>
+        <item>Hidden Locations</item>
+        <item>Profile</item>
         <item>Logout</item>
         </string-array>
 
@@ -20,6 +22,7 @@
     <string name="title_activity_freq">FreqActivity</string>
     <string name="title_activity_rare">RareActivity</string>
     <string name="title_activity_encounter">Encounters</string>
+    <string name="title_activity_profile_update">ProfileUpdateActivity</string>
     <string name="endpoint">http://web.engr.illinois.edu/~reese6/MHacks/</string>
     <string name="title_service_location_update">LocationUpdateService</string>
     

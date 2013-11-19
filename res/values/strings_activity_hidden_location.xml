@@ -1,0 +1,9 @@
+<resources>
+
+    <string name="title_activity_hidden_location">Hidden Location</string>
+
+    <!-- Strings related to hidden_location -->
+    <string name="hidden_location_add_current">Add Current Location</string>
+    <string name="hidden_location_remove_current">Remove Current Location</string>
+    
+</resources>
