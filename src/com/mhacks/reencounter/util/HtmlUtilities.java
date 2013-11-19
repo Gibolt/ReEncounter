@@ -89,12 +89,12 @@ public class HtmlUtilities {
         String rLine = "";
         StringBuilder answer = new StringBuilder();
         BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-          
+
         try {
             while ((rLine = rd.readLine()) != null) {
             answer.append(rLine);
             }
-        }      
+        }
         catch (IOException e) {
             e.printStackTrace();
         }

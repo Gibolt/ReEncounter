@@ -7,23 +7,24 @@ if(isset($_GET['user']) && isset($_GET['password']) && isset($_GET['timestamp'])
 	$lon      = floatval($_GET['lon']);
 	$time     = $_GET['timestamp'];
 
+	$defaultRadius = 1;
 	$defaultDegree = 1/69;
 	$defaultDegreeLon = $defaultDegree/cos(deg2rad($lat));  # Converts optimization based on latitude
 	$minLat = $lat-$defaultDegree;
 	$maxLat = $lat+$defaultDegree;
-	$minLon = $lon+$defaultDegreeLon;
-	$maxLon = $lon-$defaultDegreeLon;
+	$minLon = $lon-$defaultDegreeLon;
+	$maxLon = $lon+$defaultDegreeLon;
 
 	$con = establishConnection();
 	userAuthentication($user, $password, $con);
-	echo "User Authenticated<br>";
+#	echo "User Authenticated<br>";
 
 	$select_timestmp = "Select User, Latitude, Longitude From Timestmp 
 						Where Time = '$time' And Latitude > $minLat And Latitude < $maxLat And Longitude > $minLon And Longitude < $maxLon;";
 	$result_timestmp = mysqli_query($con, $select_timestmp) or die('Failed: '.$select_timestamp);
 	$lines = mysqli_num_rows($result_timestmp);
-	echo "Timestamp selected, $lines matched<br>";
-	echo "Current timestamp: $time<br>";
+#	echo "Timestamp selected, $lines matched<br>";
+#	echo "Current timestamp: $time<br>";
 
 	if(mysqli_num_rows($result_timestmp)) {
 		$select_for_block = "Select User2 As otherUser from Blocked 
@@ -33,11 +34,11 @@ if(isset($_GET['user']) && isset($_GET['password']) && isset($_GET['timestamp'])
 							 Where User2 = '$user'
 							 Order By otherUser;";
 		$result_for_block = mysqli_query($con, $select_for_block) or die('Failed: '.$select_for_block);
-		echo "Entering While Loop<br>";
+#		echo "Entering While Loop<br>";
 		while($timestamp = mysqli_fetch_assoc($result_timestmp)) {
 			$otherUser = $timestamp["User"];
 			if ($user == $otherUser) {  # User already has submitted for this timestamp. Prevents failed submission
-				echo "Timestamp already exists<br>";
+#				echo "Timestamp already exists<br>";
 				return;
 			}
 			if (containsUser($otherUser, $result_for_block)) {  # Block between users
@@ -46,7 +47,7 @@ if(isset($_GET['user']) && isset($_GET['password']) && isset($_GET['timestamp'])
 			$otherLat  = $timestamp["Latitude"];
 			$otherLon  = $timestamp["Longitude"];
 			$proximity = distance($lat, $lon, $otherLat, $otherLon, $defaultUnit);
-			echo "Proximity is: $proximity. Timestamp is: $time.<br>";
+#			echo "Proximity is: $proximity. Timestamp is: $time.<br>";
 			if ($proximity < $defaultRadius) {  # Within a default radius
                 #Check to see if encounter between users for the day is already added into database
                 $current_date = date('Y-m-d H:i:s');
@@ -86,13 +87,13 @@ if(isset($_GET['user']) && isset($_GET['password']) && isset($_GET['timestamp'])
                 }
 			}
 		}
-		echo "Exited While Loop<br>";
+#		echo "Exited While Loop<br>";
 	}
 
 	$insert_timestmp = "Insert Into Timestmp
 						Values ('$user', '$time', $lat, $lon);";
 	$result = mysqli_query($con, $insert_timestmp) or die('Failed: '.$insert_timestmp);
-	echo "Inserting into Timestamp<br>";
+#	echo "Inserting into Timestamp<br>";
 
 	@mysqli_close($con);
 }

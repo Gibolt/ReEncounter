@@ -1,12 +1,12 @@
 <?php
-if(isset($_GET['user']) && isset($_GET['password']) && isset($_GET['num'])) {
+if(isset($_GET['user']) && isset($_GET['password']) && isset($_GET['max'])) {
 	include 'globalFunctions.php';
 	$user     = strtolower($_GET['user']);
 	$password = $_GET['password'];
-	$min_num  = 2;
-	$max_num  = intval($_GET['num']);
+	$min      = 2;
+	$max      = intval($_GET['max']);
 
-	if ($max_num < $min_num) {
+	if ($max < $min) {
 		die();
 	}
 	
@@ -24,7 +24,7 @@ if(isset($_GET['user']) && isset($_GET['password']) && isset($_GET['num'])) {
 	$posts = array();
 	while($post = mysqli_fetch_assoc($result_for_user)) {
 		$times = intval($post['Times']);
-		if( $times >= $min_num && $times <= $max_num) {
+		if( $times >= $min && $times <= $max) {
 			array_push($posts,$post);
 		}
 	}

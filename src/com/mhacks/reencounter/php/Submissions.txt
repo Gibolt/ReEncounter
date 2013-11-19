@@ -9,25 +9,25 @@ http://web.engr.illinois.edu/~reese6/MHacks/updateUser.php?user=Gibolt&password=
 http://web.engr.illinois.edu/~reese6/MHacks/updateUser.php?user=Gibolt&password=yeahRight&phone=15556379294&description=Hi%2E%20My%20name%20is%20Fake%2E&phone2=8647699877&email2=fakeEmail%40fake.com&name=Thomas
 http://web.engr.illinois.edu/~reese6/MHacks/updateUser.php?user=Jerry&password=tom&phone=18792840274&description=This%20is%20a%20bad%20description&phone2=8692748372&email2=Jerrys%40gov.de&name=Jerry%20Man
 
-http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=Gibolt&password=yeahRight&lat=-122.084095&long=37.422006&timestamp=2013%2D09%2D21%2009%3A45%3A00
-http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=SnoreKing2&password=Asl33p&lat=-122.084095&long=37.422006&timestamp=2013%2D09%2D21%2009%3A45%3A00
-http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=SmallWorld&password=app&lat=-122.079384&long=37.422216&timestamp=2013%2D09%2D21%2009%3A45%3A00
-http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=Jerry&password=tom&lat=-122.076837&long=37.423184&timestamp=2013%2D09%2D21%2009%3A45%3A00
+http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=Gibolt&password=yeahRight&lon=-122.084095&lat=37.422006&timestamp=2013%2D09%2D21%2009%3A45%3A00
+http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=SnoreKing2&password=Asl33p&lon=-122.084095&lat=37.422006&timestamp=2013%2D09%2D21%2009%3A45%3A00
+http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=SmallWorld&password=app&lon=-122.079384&lat=37.422216&timestamp=2013%2D09%2D21%2009%3A45%3A00
+http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=Jerry&password=tom&lon=-122.076837&lat=37.423184&timestamp=2013%2D09%2D21%2009%3A45%3A00
 
-http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=Gibolt&password=yeahRight&lat=-122.079384&long=37.422216&timestamp=2013%2D09%2D20%2009%3A45%3A00
-http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=Jerry&password=tom&lat=-122.076837&long=37.423184&timestamp=2013%2D09%2D20%2009%3A45%3A00
+http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=Gibolt&password=yeahRight&lon=-122.079384&lat=37.422216&timestamp=2013%2D09%2D20%2009%3A45%3A00
+http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=Jerry&password=tom&lon=-122.076837&lat=37.423184&timestamp=2013%2D09%2D20%2009%3A45%3A00
 
-http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=Gibolt&password=yeahRight&lat=-122.079384&long=37.422216&timestamp=2013%2D09%2D23%2009%3A45%3A00
-http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=Jerry&password=tom&lat=-122.076837&long=37.423184&timestamp=2013%2D09%2D23%2009%3A45%3A00
-http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=SmallWorld&password=app&lat=-122.077837&long=37.423284&timestamp=2013%2D09%2D23%2009%3A45%3A00
+http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=Gibolt&password=yeahRight&lon=-122.079384&lat=37.422216&timestamp=2013%2D09%2D23%2009%3A45%3A00
+http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=Jerry&password=tom&lon=-122.076837&lat=37.423184&timestamp=2013%2D09%2D23%2009%3A45%3A00
+http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=SmallWorld&password=app&lon=-122.077837&lat=37.423284&timestamp=2013%2D09%2D23%2009%3A45%3A00
 
-http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=Gibolt&password=yeahRight&lat=-122.079384&long=37.422216&timestamp=2013%2D09%2D25%2009%3A45%3A00
-http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=Jerry&password=tom&lat=-122.076837&long=37.423184&timestamp=2013%2D09%2D25%2009%3A45%3A00
+http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=Gibolt&password=yeahRight&lon=-122.079384&lat=37.422216&timestamp=2013%2D09%2D25%2009%3A45%3A00
+http://web.engr.illinois.edu/~reese6/MHacks/commit.php?user=Jerry&password=tom&lon=-122.076837&lat=37.423184&timestamp=2013%2D09%2D25%2009%3A45%3A00
 
 
-http://web.engr.illinois.edu/~reese6/MHacks/queryNew.php?user=Jerry&password=tom&num=3
-http://web.engr.illinois.edu/~reese6/MHacks/queryRare.php?user=Jerry&password=tom&minnum=4&maxnum=7
-http://web.engr.illinois.edu/~reese6/MHacks/queryFrequent.php?user=Jerry&password=tom&num=8
+http://web.engr.illinois.edu/~reese6/MHacks/queryNew.php?user=Jerry&password=tom&max=3
+http://web.engr.illinois.edu/~reese6/MHacks/queryRare.php?user=Jerry&password=tom&min=4&max=7
+http://web.engr.illinois.edu/~reese6/MHacks/queryFrequent.php?user=Jerry&password=tom&min=8
 
 
 http://web.engr.illinois.edu/~reese6/MHacks/maps.php?user1=Jerry&user2=Gibolt&password=tom
